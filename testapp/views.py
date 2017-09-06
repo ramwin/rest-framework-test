@@ -11,10 +11,21 @@ from . import models, serializers
 
 
 class BasicModelView(ListCreateAPIView):
+    """
+    get:
+    返回Text列表
+
+    post:
+    创建Text
+    """
     queryset = models.BasicModel.objects.all()
     serializer_class = serializers.BasicModelSerializer
+    filter_fields = ['text']
+
+
 
 
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
     queryset = models.BasicModel.objects.all()
     serializer_class = serializers.BasicModelSerializer
+    filter_fields = ['text']

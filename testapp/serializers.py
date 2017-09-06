@@ -11,3 +11,10 @@ class BasicModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BasicModel
         fields = "__all__"
+
+    def to_representation(self, instance):
+        # import ipdb
+        # ipdb.set_trace()
+        # if self.context['request'].user.level <= instance.userl.level:
+        #     self.fields.pop('mobile_phone')
+        return super(BasicModelSerializer, self).to_representation(instance)
