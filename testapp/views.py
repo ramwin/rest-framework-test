@@ -23,9 +23,12 @@ class BasicModelView(ListCreateAPIView):
     filter_fields = ['text']
 
 
-
-
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
     queryset = models.BasicModel.objects.all()
     serializer_class = serializers.BasicModelSerializer
     filter_fields = ['text']
+
+
+class FileView(ListCreateAPIView):
+    queryset = models.FileModel.objects.all()
+    serializer_class = serializers.FileSerializer

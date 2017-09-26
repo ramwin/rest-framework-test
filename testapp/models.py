@@ -8,3 +8,11 @@ from django.db import models
 
 class BasicModel(models.Model):
     text = models.CharField(max_length=255)
+
+
+class MyModel(models.Model):
+    field = models.CharField(max_length=255)
+
+
+class FileModel(models.Model):
+    fil = models.FileField(upload_to='uploads/%Y/%m/%d/')

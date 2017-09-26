@@ -25,7 +25,7 @@ SECRET_KEY = 'c&gfo=w3lihk(($@##en5eb-9zin@x13v_thhsvbvs5eg8i#0i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_swagger',
+    'django_filters',
     'account',
     'testapp',
 ]
@@ -123,7 +126,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_RUL = '/media/'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',)
+        'django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_RENDERER_CLASSES': (
+        "rest_framework.renderers.BrowsableAPIRenderer",
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.TemplateHTMLRenderer',
+    ),
 }

@@ -9,4 +9,5 @@ from . import views
 urlpatterns = [
     url('^basicmodel/$', views.BasicModelView.as_view()),
     url('^basicmodel/(?P<pk>\d+)/$', views.BasicModelDetailView.as_view()),
+    url(r'^file/$', views.FileView.as_view()),
 ]
