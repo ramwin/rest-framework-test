@@ -16,3 +16,8 @@ class MyModel(models.Model):
 
 class FileModel(models.Model):
     fil = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    integer = models.IntegerField(default=0)
+
+
+class ManyModel(models.Model):
+    texts = models.ManyToManyField(BasicModel)
