@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import ipdb
+
 from django.shortcuts import render
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -21,6 +23,9 @@ class BasicModelView(ListCreateAPIView):
     queryset = models.BasicModel.objects.all()
     serializer_class = serializers.BasicModelSerializer
     filter_fields = ['text']
+
+    def get(self, request):
+        ipdb.set_trace()
 
 
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):

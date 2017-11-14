@@ -43,7 +43,7 @@ class MyField(serializers.RegexField):
         print('calling to_internal_value')
         self.run_validators(data)
         print("转化数据")
-        return "处理后的数据"
+        return 2
 
 
 class MySerializer(serializers.Serializer):
@@ -53,9 +53,33 @@ class MySerializer(serializers.Serializer):
         model = models.MyModel
         fields = ['field']
 
+    def save(self):
+        pass
+
 
 class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.FileModel
-        fields = ["fil"]
+        fields = ["fil", 'integer']
+        extra_kwargs = {
+            'fil': {
+                'use_url': False
+            }
+        }
+
+
+class ManySerializer(serializers.ModelSerializer):
+    texts = serializers.ListField(child=serializers.CharField())
+
+    class Meta:
+        model = models.ManyModel
+        fields = ["texts"]
+
+
+class ManyDetailSerializer(serializers.ModelSerializer):
+    texts = serializers.ListField(source="texts.text")
+
+    class Meta:
+        model = models.ManyModel
+        fields = ["texts"]
