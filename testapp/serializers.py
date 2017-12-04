@@ -64,7 +64,7 @@ class FileSerializer(serializers.ModelSerializer):
         fields = ["fil", 'integer']
         extra_kwargs = {
             'fil': {
-                'use_url': False
+                # 'use_url': False
             }
         }
 
