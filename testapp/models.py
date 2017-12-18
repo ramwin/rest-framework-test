@@ -21,3 +21,10 @@ class FileModel(models.Model):
 
 class ManyModel(models.Model):
     texts = models.ManyToManyField(BasicModel)
+
+
+class DateTimeModel(models.Model):
+    time = models.DateTimeField()
+
+    def __str__(self):
+        return "id:%d, time: %s" % (self.id or 0, self.time)
