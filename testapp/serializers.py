@@ -83,3 +83,37 @@ class ManyDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ManyModel
         fields = ["texts"]
+
+
+class FileModelSerializer1(serializers.ModelSerializer):
+    a = serializers.SerializerMethodField()
+
+    def get_a(self, instance):
+        return 'a1'
+
+    class Meta:
+        model = models.FileModel
+        fields = ['fil', 'a']
+
+class FileModelSerializer2(serializers.ModelSerializer):
+    a = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.FileModel
+        fields = ['integer', 'a']
+
+    def get_a(self, instance):
+        return 'a'
+
+
+class FileModelSerializer3(FileModelSerializer2, FileModelSerializer1):
+    class Meta(FileModelSerializer1.Meta):
+        fields = list(set(FileModelSerializer1.Meta.fields + FileModelSerializer2.Meta.fields))
+
+
+class ForeignKeySerializer(serializers.ModelSerializer):
+    text = BasicModelSerializer(many=True, queryset=models.BasicModel.objects.all())
+
+    class Meta:
+        model = models.ForeignKeyModel
+        fields = ['text', 'id']

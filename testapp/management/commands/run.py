@@ -4,9 +4,12 @@
 
 
 from django.core.management.base import BaseCommand
-from testapp.models import DateTimeModel
+from testapp.models import (
+    DateTimeModel, FileModel, BasicModel, ForeignKeyModel)
 from testapp.filters import DateTimeFilter
+from testapp.serializers import *
 import json
+import pprint
 
 
 class Command(BaseCommand):
@@ -16,6 +19,21 @@ class Command(BaseCommand):
             sorted(set(map(lambda x: x.time.isoformat(), queryset)))))
 
     def handle(self, *args, **kwargs):
+        """测试嵌套的序列化类能否进行过滤"""
+        basicmodel1 = BasicModel.objects.create(text='text1')
+        basicmodel2 = BasicModel.objects.create(text='text2')
+        foreignkeymodel = ForeignKeyModel.objects.create()
+        foreignkeymodel.text.add(basicmodel1)
+        pprint.pprint(ForeignKeySerializer(foreignkeymodel).data, indent=4)
+
+
+    def handle2(self, *args, **kwargs):
+        print(FileModel.objects.all())
+        file_m = FileModel.objects.first()
+        print(FileModelSerializer1(file_m).data)
+        print(FileModelSerializer3(file_m).data)
+
+    def handle1(self, *args, **kwargs):
         DateTimeModel.objects.get_or_create(
             time='2017-12-11T03:19:27.105918+00:00')
         DateTimeModel.objects.get_or_create(

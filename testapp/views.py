@@ -5,9 +5,10 @@ import ipdb
 
 from django.shortcuts import render
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 )
 from . import models, serializers
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -24,14 +25,19 @@ class BasicModelView(ListCreateAPIView):
     serializer_class = serializers.BasicModelSerializer
     filter_fields = ['text']
 
-    def get(self, request):
-        ipdb.set_trace()
-
 
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
     queryset = models.BasicModel.objects.all()
     serializer_class = serializers.BasicModelSerializer
     filter_fields = ['text']
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        import ipdb
+        ipdb.set_trace()
+        return super(BasicModelDetailView, self).finalize_response(request, response, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        return Response({})
 
 
 class FileView(ListCreateAPIView):

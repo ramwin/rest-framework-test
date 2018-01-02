@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+# from django.contrib.gis.db import models as gismodels
 
 # Create your models here.
 
@@ -28,3 +29,11 @@ class DateTimeModel(models.Model):
 
     def __str__(self):
         return "id:%d, time: %s" % (self.id or 0, self.time)
+
+
+# class PointModel(gismodels.Model):
+#     point = gismodels.PointField()
+
+
+class ForeignKeyModel(models.Model):
+    text = models.ManyToManyField(BasicModel)
