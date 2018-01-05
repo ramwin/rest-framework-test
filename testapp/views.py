@@ -7,13 +7,14 @@ from django.shortcuts import render
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 )
+from rest_framework.views import APIView
 from . import models, serializers
 from rest_framework.response import Response
 
 # Create your views here.
 
 
-class BasicModelView(ListCreateAPIView):
+class BasicModelView(APIView):
     """
     get:
     返回Text列表
@@ -22,8 +23,12 @@ class BasicModelView(ListCreateAPIView):
     创建Text
     """
     queryset = models.BasicModel.objects.all()
-    serializer_class = serializers.BasicModelSerializer
+    # serializer_class = serializers.BasicModelSerializer
     filter_fields = ['text']
+    http_method_names = ['post']
+
+    def post(self, request):
+        return Response('ew')
 
 
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):

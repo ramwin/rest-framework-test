@@ -112,7 +112,7 @@ class FileModelSerializer3(FileModelSerializer2, FileModelSerializer1):
 
 
 class ForeignKeySerializer(serializers.ModelSerializer):
-    text = BasicModelSerializer(many=True, queryset=models.BasicModel.objects.all())
+    text = BasicModelSerializer(many=True, )
 
     class Meta:
         model = models.ForeignKeyModel

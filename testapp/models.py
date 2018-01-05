@@ -8,7 +8,7 @@ from django.db import models
 
 
 class BasicModel(models.Model):
-    text = models.CharField(max_length=255)
+    text = models.CharField(max_length=255, blank=False)
 
 
 class MyModel(models.Model):
