@@ -117,3 +117,11 @@ class ForeignKeySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ForeignKeyModel
         fields = ['text', 'id']
+
+
+class PartialModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.PartialModel
+        fields = ["text1", "text2", "text3"]
+        read_only_fields = ["text1"]

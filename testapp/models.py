@@ -11,6 +11,13 @@ class BasicModel(models.Model):
     text = models.CharField(max_length=255, blank=False)
 
 
+class PartialModel(models.Model):
+    """测试序列化类必须填写"""
+    text1 = models.CharField(max_length=255)
+    text2 = models.CharField(max_length=255)
+    text3 = models.CharField(max_length=255)
+
+
 class MyModel(models.Model):
     field = models.CharField(max_length=255)
 

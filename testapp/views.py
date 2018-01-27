@@ -48,3 +48,14 @@ class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
 class FileView(ListCreateAPIView):
     queryset = models.FileModel.objects.all()
     serializer_class = serializers.FileSerializer
+
+
+class PartialModelPatchView(RetrieveUpdateDestroyAPIView):
+    queryset = models.PartialModel.objects.all()
+    serializer_class = serializers.PartialModelSerializer
+
+    def get_serializer(self, *args, **kwargs):
+        if 'partial' in kwargs:
+            kwargs.pop('partial')
+        print(kwargs)
+        return self.serializer_class(*args, **kwargs)
