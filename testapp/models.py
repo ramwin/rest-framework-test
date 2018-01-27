@@ -37,3 +37,13 @@ class DateTimeModel(models.Model):
 
 class ForeignKeyModel(models.Model):
     text = models.ManyToManyField(BasicModel)
+
+
+def myfunction():
+    print("调用myfunction")
+    return "123"
+
+
+class TestDefault(models.Model):
+    """测试default的函数是否会被调用"""
+    text = models.CharField(default=myfunction, max_length=32)
