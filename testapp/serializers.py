@@ -125,3 +125,11 @@ class PartialModelSerializer(serializers.ModelSerializer):
         model = models.PartialModel
         fields = ["text1", "text2", "text3"]
         read_only_fields = ["text1"]
+
+
+class TestNullSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TestNullModel
+        fields = ["can_null_blank", "can_null", "can_blank",
+                  "can_default", "can"]

@@ -59,3 +59,11 @@ def myfunction():
 class TestDefault(models.Model):
     """测试default的函数是否会被调用"""
     text = models.CharField(default=myfunction, max_length=32)
+
+
+class TestNullModel(models.Model):
+    can_null_blank = models.TextField(null=True, blank=True)
+    can_null = models.TextField(null=True)
+    can_blank = models.TextField(blank=True)
+    can_default = models.TextField(default="")
+    can = models.TextField()
