@@ -7,7 +7,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+def myfunction():
+    print("calling myfunction")
+    print(123)
+    return ""
+
+
 class User(AbstractUser):
+    userid = models.CharField(default=myfunction, max_length=32)
 
     class Meta(AbstractUser.Meta):
         verbose_name_plural = "用户"
