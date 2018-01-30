@@ -18,6 +18,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(
             sorted(set(map(lambda x: x.time.isoformat(), queryset)))))
 
+
     def handle(self, *args, **kwargs):
         """测试嵌套的序列化类能否进行过滤"""
         basicmodel1 = BasicModel.objects.create(text='text1')

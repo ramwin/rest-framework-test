@@ -39,7 +39,8 @@ class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
     def finalize_response(self, request, response, *args, **kwargs):
         import ipdb
         ipdb.set_trace()
-        return super(BasicModelDetailView, self).finalize_response(request, response, *args, **kwargs)
+        response = super(BasicModelDetailView, self).finalize_response(request, response, *args, **kwargs)
+        return response
 
     def destroy(self, request, *args, **kwargs):
         return Response({})

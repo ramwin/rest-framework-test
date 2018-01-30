@@ -37,3 +37,8 @@ class DateTimeModel(models.Model):
 
 class ForeignKeyModel(models.Model):
     text = models.ManyToManyField(BasicModel)
+
+
+class GetOrCreateModel(models.Model):
+    text = models.CharField(max_length=255)
+    time = models.DateTimeField(auto_now_add=True)
