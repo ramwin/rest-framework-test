@@ -63,7 +63,7 @@ class TestDefault(models.Model):
 
 class TestNullModel(models.Model):
     can_null_blank = models.TextField(null=True, blank=True)
-    can_null = models.TextField(null=True)
-    can_blank = models.TextField(blank=True)
-    can_default = models.TextField(default="")
-    can = models.TextField()
+    can_null = models.TextField(null=True)  # 可以不填，不能填 ""
+    can_blank = models.TextField(blank=True)  # 可以不填或填"", 不能填 None
+    can_default = models.TextField(default="")  # 可以不填, 但是不能为空或者None
+    can = models.TextField()  # 必填, 不能为空
