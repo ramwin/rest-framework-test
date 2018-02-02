@@ -3,8 +3,11 @@
 # Xiang Wang @ 2017-09-05 12:03:51
 
 
-from rest_framework import serializers
 from django.core.validators import MaxValueValidator
+from django.utils import timezone
+
+from rest_framework import serializers
+
 from . import models
 
 
@@ -133,3 +136,16 @@ class TestNullSerializer(serializers.ModelSerializer):
         model = models.TestNullModel
         fields = ["can_null_blank", "can_null", "can_blank",
                   "can_default", "can"]
+
+
+class TestHiddenField(serializers.Serializer):
+    time1 = serializers.HiddenField(default=timezone.now)
+
+    class Meta:
+        fields = ["text"]
+
+
+class TestAutoNowAddSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ["text", "time"]

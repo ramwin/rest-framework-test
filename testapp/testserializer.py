@@ -16,11 +16,12 @@ out = OutputWrapper(sys.stdout)
 style = color_style()
 class MySerializerTestCase(TestCase):
 
-    def test_serializer(self):
-        print("准备测试")
-        a = serializers.MySerializer(data={'field': 2})
-        a.is_valid(raise_exception=True)
-        a.save()
+    def test_hidden(self):
+        out.write(style.HTTP_INFO("准备测试hiddenfield"))
+        s = serializers.TestHiddenField(data={"time1": "send"})
+        s.is_valid(raise_exception=True)
+        out.write(style.SUCCESS(s.validated_data))
+        out.write(style.HTTP_INFO("测试完毕"))
 
     def test_many(self):
         print("准备测试多对多")
@@ -52,3 +53,16 @@ class MySerializerTestCase(TestCase):
                 out.write(style.SUCCESS(serializer.data))
             else:
                 out.write(style.ERROR(serializer.errors))
+
+    def test_serializer(self):
+        print("准备测试")
+        a = serializers.MySerializer(data={'field': 2})
+        a.is_valid(raise_exception=True)
+        a.save()
+
+    def test_auto_now(self):
+        out.write(style.HTTP_INFO("准备测试auto_now_add"))
+        s = serializers.TestHiddenField(data={"text": "text", "time": "time"})
+        s.is_valid(raise_exception=True)
+        out.write(style.SUCCESS(s.validated_data))
+        out.write(style.HTTP_INFO("测试完毕"))
