@@ -67,3 +67,8 @@ class TestNullModel(models.Model):
     can_blank = models.TextField(blank=True)  # 可以不填或填"", 不能填 None
     can_default = models.TextField(default="")  # 可以不填, 但是不能为空或者None
     can = models.TextField()  # 必填, 不能为空
+
+
+class ForeignKeyModel2(models.Model):
+    """测试上传用外键，下载用字典"""
+    text = models.ForeignKey(BasicModel)

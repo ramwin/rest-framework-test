@@ -149,3 +149,9 @@ class TestAutoNowAddSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ["text", "time"]
+
+
+class ForeignKey2Serializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.ForeignKeyModel2

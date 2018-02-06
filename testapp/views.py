@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 
 import ipdb
+import tempfile
 
+from django.http import FileResponse, HttpResponse, StreamingHttpResponse
 from django.shortcuts import render
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
@@ -60,3 +62,26 @@ class PartialModelPatchView(RetrieveUpdateDestroyAPIView):
             kwargs.pop('partial')
         print(kwargs)
         return self.serializer_class(*args, **kwargs)
+
+
+class FileReturnView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        if request._request.path.endswith("download/"):
+            return render(request, "testapp/返回文件.html", {})
+        temp_file = tempfile.NamedTemporaryFile(mode='w', suffix="csv")
+        for i in range(1000):
+            temp_file.write("hello\n")
+        # return FileResponse(temp_file)
+
+        # 使用straming会报错
+        return StreamingHttpResponse("we", content_type="text/csv")
+
+        # 直接返回文档和数据，但是这样名字是根据后缀名来的，不是根据下面的filename来的
+        print("直接返回文档")
+        response = HttpResponse(
+            "ok", content_type="text/csv")
+        response["Content-Disposition"] = "attachment:filename=\"{}\"".format(
+            "test.csv"
+        )
+        return response
