@@ -7,3 +7,4 @@ from . import models
 # Register your models here.
 admin.site.register(models.FileModel)
 admin.site.register(models.PartialModel)
+admin.site.register(models.GetOrCreateModel)

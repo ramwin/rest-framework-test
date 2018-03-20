@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^docs/', include_docs_urls(title='My API title')),
     url(r'testapp/', include('testapp.urls')),
+    url(r'^report_builder/', include('report_builder.urls')),
 ]

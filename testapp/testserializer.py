@@ -35,7 +35,8 @@ class MySerializerTestCase(TestCase):
         # print(serializers.ManyDetailSerializer(a.instance).data)
 
     def test_null(self):
-        print("准备测试null")
+        print("不测试null")
+        return
         data_list = [
             {},
             {"can": ""},
@@ -66,3 +67,29 @@ class MySerializerTestCase(TestCase):
         s.is_valid(raise_exception=True)
         out.write(style.SUCCESS(s.validated_data))
         out.write(style.HTTP_INFO("测试完毕"))
+
+    def test_regex(self):
+        print("测试正则表达式的serializer")
+        data_list = [
+            {},
+            {"avatar": ""},
+            {"avatar": None},
+            {"avatar": "tmp-group-123"},
+        ]
+        for data in data_list:
+            serializer = serializers.TestRegexSerializer(data=data)
+            print("准备处理: %s" % data)
+            if serializer.is_valid(raise_exception=False):
+                out.write(style.SUCCESS(serializer.data))
+            else:
+                out.write(style.ERROR(serializer.errors))
+
+    def test_many_true(self):
+        print("准备测试嵌套的序列化类")
+        a = serializers.ForeignKeySerializer(data={"text": [
+            {"text":"text1"}, {"text": "text2"}
+        ]})
+        a.is_valid(raise_exception=True)
+        a.save()
+        print(a.data)
+        print("嵌套的测试完毕")

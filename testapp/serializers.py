@@ -121,6 +121,11 @@ class ForeignKeySerializer(serializers.ModelSerializer):
         model = models.ForeignKeyModel
         fields = ['text', 'id']
 
+    def create(self, validated_data):
+        text = validated_data.pop('text')
+        print(text[0])
+        return super(ForeignKeySerializer, self).create(validated_data)
+
 
 class PartialModelSerializer(serializers.ModelSerializer):
 
@@ -155,3 +160,10 @@ class ForeignKey2Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.ForeignKeyModel2
+
+
+class TestRegexSerializer(serializers.Serializer):
+    avatar = serializers.RegexField(regex="tmp-.*")
+
+    class Meta:
+        fields = ["avatar"]
