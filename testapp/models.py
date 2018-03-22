@@ -72,3 +72,10 @@ class TestNullModel(models.Model):
 class ForeignKeyModel2(models.Model):
     """测试上传用外键，下载用字典"""
     text = models.ForeignKey(BasicModel)
+
+
+class TestMethodModel(models.Model):
+    text = models.CharField(max_length=243)
+
+    def get_num(self):
+        return 2

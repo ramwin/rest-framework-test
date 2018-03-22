@@ -93,3 +93,25 @@ class MySerializerTestCase(TestCase):
         a.save()
         print(a.data)
         print("嵌套的测试完毕")
+
+    def test_validated_data(self):
+        out.write(style.HTTP_INFO("准备测试validated_data里面的数据"))
+        text = BasicModel.objects.create(text='123')
+        data = {
+            "text": text.id
+        }
+        s = serializers.ForeignKey2Serializer(data=data)
+        s.is_valid()
+        out.write(style.HTTP_INFO(s.validated_data))
+        out.write(style.ERROR(s.errors))
+
+    def test_method(self):
+        out.write(style.HTTP_INFO("准备测试method里面的数据"))
+        data = {
+            "text": 'text'
+        }
+        s = serializers.TestMethodSerializer(data=data)
+        s.is_valid()
+        s.save()
+        out.write(style.HTTP_INFO(s.data))
+        out.write(style.ERROR(s.errors))

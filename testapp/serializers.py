@@ -160,6 +160,7 @@ class ForeignKey2Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.ForeignKeyModel2
+        fields = "__all__"
 
 
 class TestRegexSerializer(serializers.Serializer):
@@ -167,3 +168,11 @@ class TestRegexSerializer(serializers.Serializer):
 
     class Meta:
         fields = ["avatar"]
+
+
+class TestMethodSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TestMethodModel
+        # fields = "__all__"  # 不会有get_num
+        fields = ["text", "get_num", "id"]
