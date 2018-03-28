@@ -88,6 +88,14 @@ class ManyDetailSerializer(serializers.ModelSerializer):
         fields = ["texts"]
 
 
+class ManyDetail2Serializer(serializers.ModelSerializer):
+    texts = BasicModelSerializer(many=True)
+
+    class Meta:
+        model = models.ManyModel
+        fields = ["texts", "id"]
+
+
 class FileModelSerializer1(serializers.ModelSerializer):
     a = serializers.SerializerMethodField()
 
@@ -176,3 +184,11 @@ class TestMethodSerializer(serializers.ModelSerializer):
         model = models.TestMethodModel
         # fields = "__all__"  # 不会有get_num
         fields = ["text", "get_num", "id"]
+
+
+class TestMetaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.BasicModel
+        fields = ["id", "text",]
+        write_only_fields = ["text"]
