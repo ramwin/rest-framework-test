@@ -89,7 +89,17 @@ class ManyDetailSerializer(serializers.ModelSerializer):
 
 
 class ManyDetail2Serializer(serializers.ModelSerializer):
-    texts = BasicModelSerializer(many=True)
+    class MyBasicModelSerializer(BasicModelSerializer):
+        def to_representation(self, instance):
+            import ipdb
+            ipdb.set_trace()
+
+    # 这个不行，还是一条一跳的
+    # texts = MyBasicModelSerializer(many=True)
+    class MyListSerializer(serializers.ListSerializer):
+        pass
+    # 下面这个也失败，child无法放序列化类
+    # texts = MyListSerializer(child=BasicModelSerializer)
 
     class Meta:
         model = models.ManyModel
