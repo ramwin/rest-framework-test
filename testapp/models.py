@@ -63,7 +63,7 @@ class TestDefault(models.Model):
 
 class TestNullModel(models.Model):
     can_null_blank = models.TextField(null=True, blank=True)
-    can_null = models.TextField(null=True)  # 可以不填，不能填 ""
+    can_null = models.TextField(null=True)  # 可以不填或填None，不能填 ""
     can_blank = models.TextField(blank=True)  # 可以不填或填"", 不能填 None
     can_default = models.TextField(default="")  # 可以不填, 但是不能为空或者None
     can = models.TextField()  # 必填, 不能为空
@@ -79,3 +79,11 @@ class TestMethodModel(models.Model):
 
     def get_num(self):
         return 2
+
+
+class ValidateModel(models.Model):
+    STATUS_CHOICE = (
+        (0, "以支付"),
+        (1, "为支付"),
+    )
+    status = models.IntegerField(choices=STATUS_CHOICE)

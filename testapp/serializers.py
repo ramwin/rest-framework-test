@@ -202,3 +202,17 @@ class TestMetaSerializer(serializers.ModelSerializer):
         model = models.BasicModel
         fields = ["id", "text",]
         write_only_fields = ["text"]
+
+
+class TestValidateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ValidateModel
+        fields = ["status"]
+
+    def validate_status(self, value):
+        # 这个只有默认的validate通过了，才会调用
+        # 调用的时候，value已经是转化过了的
+        print("调用了validate_status方法")
+        print(value)
+        print(type(value))
+        return value

@@ -36,8 +36,8 @@ class MySerializerTestCase(TestCase):
         # print(serializers.ManyDetailSerializer(a.instance).data)
 
     def test_null(self):
-        print("不测试null")
-        return
+        # print("不测试null")
+        # return
         data_list = [
             {},
             {"can": ""},
@@ -128,3 +128,15 @@ class MySerializerTestCase(TestCase):
                 out.write(style.SUCCESS(serializer.data))
             else:
                 out.write(style.ERROR(serializer.errors))
+
+    def test_validation(self):
+        out.write(style.HTTP_INFO("准备测试自己的validation"))
+        data_list = [
+            {"status": "0"},
+            {"status": "1"},
+            {"status": "2"},
+        ]
+        for data in data_list:
+            serializer = serializers.TestValidateSerializer(data=data)
+            print(serializer.is_valid())
+        out.write(style.SUCCESS("测试自己的validation完毕"))
