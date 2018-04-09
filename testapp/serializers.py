@@ -216,3 +216,16 @@ class TestValidateSerializer(serializers.ModelSerializer):
         print(value)
         print(type(value))
         return value
+
+
+class TestToRepresentationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.BasicModel
+        fields = ["text", "id"]
+
+    def to_representation(self, instance):
+        print("调用to_representation")  # 如果是直接is_valid()后调用 .data, 就会出现这个不是instance而是OrderedDict的情况
+        print(instance)
+        print(type(instance))
+        return super(TestToRepresentationSerializer, self).to_representation(
+            instance)

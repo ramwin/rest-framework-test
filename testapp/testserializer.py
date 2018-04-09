@@ -140,3 +140,20 @@ class MySerializerTestCase(TestCase):
             serializer = serializers.TestValidateSerializer(data=data)
             print(serializer.is_valid())
         out.write(style.SUCCESS("测试自己的validation完毕"))
+
+    def test_to_representation(self):
+        out.write(style.HTTP_INFO("准备测试to_representation函数"))
+        data = {"text": "text"}
+        out.write(style.HTTP_INFO("准备测试to_representation函数"))
+        out.write(style.HTTP_INFO("准备测试to_representation函数1"))
+        serializer = serializers.TestToRepresentationSerializer(data=data)
+        serializer.is_valid()
+        print(serializer.data)
+        out.write(style.HTTP_INFO("准备测试to_representation函数2"))
+        serializer = serializers.TestToRepresentationSerializer(data=data)
+        serializer.is_valid()
+        serializer.save()
+        print(serializer.data)
+        out.write(style.HTTP_INFO("准备测试to_representation函数3"))
+        serializers.TestToRepresentationSerializer(serializer.instance).data
+        out.write(style.MIGRATE_HEADING("测试to_representation结束"))
