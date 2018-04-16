@@ -87,3 +87,10 @@ class ValidateModel(models.Model):
         (1, "为支付"),
     )
     status = models.IntegerField(choices=STATUS_CHOICE)
+
+
+class TestPropertyModel(models.Model):
+
+    @property  # 很好，这个就是read_only的，直接用
+    def pro(self):
+        return "我的属性"

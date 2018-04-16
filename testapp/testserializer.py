@@ -157,3 +157,11 @@ class MySerializerTestCase(TestCase):
         out.write(style.HTTP_INFO("准备测试to_representation函数3"))
         serializers.TestToRepresentationSerializer(serializer.instance).data
         out.write(style.MIGRATE_HEADING("测试to_representation结束"))
+
+    def test_property(self):
+        out.write(style.HTTP_INFO("准备测试property的序列化"))
+        out.write(style.HTTP_INFO("测试用pro"))
+        data = {}
+        serializer1 = serializers.TestPropertySerializer(data=data)
+        serializer1.is_valid()
+        serializer1.save()

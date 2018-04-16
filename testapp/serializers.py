@@ -229,3 +229,24 @@ class TestToRepresentationSerializer(serializers.ModelSerializer):
         print(type(instance))
         return super(TestToRepresentationSerializer, self).to_representation(
             instance)
+
+
+class TestPropertySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TestPropertyModel
+        fields = ["id", "pro"]
+
+
+class TestPropertySerializer2(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TestPropertyModel
+        fields = "__all__"
+
+
+class TestPropertySerializer3(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TestPropertyModel
+        fields = ["id"]
