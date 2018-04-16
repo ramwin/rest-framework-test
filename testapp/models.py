@@ -94,3 +94,8 @@ class TestPropertyModel(models.Model):
     @property  # 很好，这个就是read_only的，直接用
     def pro(self):
         return "我的属性"
+
+
+class TestAdminModel(models.Model):
+
+    img = models.URLField()
