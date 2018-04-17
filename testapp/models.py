@@ -99,3 +99,9 @@ class TestPropertyModel(models.Model):
 class TestAdminModel(models.Model):
 
     img = models.URLField()
+
+    @property
+    def avatar(self):
+        from django.utils.html import format_html
+        return format_html('<img src="{}" style="width: 130px; \
+                            height: 100px"/>'.format(self.img))
