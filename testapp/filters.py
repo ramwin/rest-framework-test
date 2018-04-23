@@ -8,7 +8,9 @@ import django_filters
 
 
 class DateTimeFilter(django_filters.rest_framework.FilterSet):
-    time__gt = django_filters.IsoDateTimeFilter(name="time", lookup_expr="gt")
+    time__gt = django_filters.IsoDateTimeFilter(
+        name="time", lookup_expr="gt")
+
     class Meta:
         model = models.DateTimeModel
         fields = ["time", "time__gt"]
@@ -18,4 +20,4 @@ class TestFilterClass(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = models.TestFilterModel
-        fields = ["status", "text", "id", "content", "many"]
+        fields = ["status", "text", "id", "content", "many", "many2"]

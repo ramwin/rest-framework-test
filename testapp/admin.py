@@ -24,3 +24,11 @@ class TestAdmin(admin.ModelAdmin):
 
 # admin.site.register(models.TestAdminModel, TestAdmin)
 admin.site.site_header = 'site_header'
+
+@admin.register(models.TestFilterModel)
+class FilterAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(models.MyModel)
+admin.site.register(models.TestFilterThrough)

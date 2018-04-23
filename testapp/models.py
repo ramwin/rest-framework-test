@@ -24,6 +24,12 @@ class PartialModel(models.Model):
 class MyModel(models.Model):
     field = models.CharField(max_length=255)
 
+    def __str__(self):
+        return "MyModel: id:{}".format(self.id)
+
+    class Meta:
+        verbose_name_plural = "简单的MyModel"
+
 
 class FileModel(models.Model):
     fil = models.FileField(upload_to='uploads/%Y/%m/%d/')
@@ -52,6 +58,9 @@ class ForeignKeyModel(models.Model):
 class GetOrCreateModel(models.Model):
     text = models.CharField(max_length=255)
     time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "GetOrCreate: Id:{}".format(self.id)
 
 
 def myfunction():
@@ -114,10 +123,19 @@ class TestFilterModel(models.Model):
     text = models.ForeignKey(BasicModel, null=True)
     status = models.IntegerField(default=1)
     content = models.TextField(blank=True)
-    many = models.ManyToManyField(MyModel)
-    many2 = models.ManyToManyField(GetOrCreateModel, through="TestFilterThrough")
+    many = models.ManyToManyField(MyModel, blank=True)  # 如果参数有many=1&many=2 那就会过滤many=1或者many=2都返回
+    many2 = models.ManyToManyField(GetOrCreateModel, through="TestFilterThrough")  # 如果参数里面有many2=2就会过滤包含many2 = many2的
+
+    class Meta:
+        verbose_name_plural = "测试过滤的Model"
+
+    def __str__(self):
+        return "测试过滤;id:{};text:{}".format(self.id, self.content)
 
 
 class TestFilterThrough(models.Model):
     model1 = models.ForeignKey(TestFilterModel)
     model2 = models.ForeignKey(GetOrCreateModel)
+
+    class Meta:
+        verbose_name_plural = "测试过滤的中间键through"
