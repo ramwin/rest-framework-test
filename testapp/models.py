@@ -10,6 +10,9 @@ from django.db import models
 class BasicModel(models.Model):
     text = models.CharField(max_length=255, blank=False)
 
+    def __str__(self):
+        return "BasicModel: {}, id: {}".format(self.text, self.id)
+
 
 class PartialModel(models.Model):
     """测试序列化类必须填写"""
@@ -105,3 +108,16 @@ class TestAdminModel(models.Model):
         from django.utils.html import format_html
         return format_html('<img src="{}" style="width: 130px; \
                             height: 100px"/>'.format(self.img))
+
+
+class TestFilterModel(models.Model):
+    text = models.ForeignKey(BasicModel, null=True)
+    status = models.IntegerField(default=1)
+    content = models.TextField(blank=True)
+    many = models.ManyToManyField(MyModel)
+    many2 = models.ManyToManyField(GetOrCreateModel, through="TestFilterThrough")
+
+
+class TestFilterThrough(models.Model):
+    model1 = models.ForeignKey(TestFilterModel)
+    model2 = models.ForeignKey(GetOrCreateModel)

@@ -7,10 +7,11 @@ import tempfile
 from django.http import FileResponse, HttpResponse, StreamingHttpResponse
 from django.shortcuts import render
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView,
+    ListAPIView,
 )
 from rest_framework.views import APIView
-from . import models, serializers
+from . import models, serializers, filters
 from rest_framework.response import Response
 
 # Create your views here.
@@ -85,3 +86,11 @@ class FileReturnView(APIView):
             "test.csv"
         )
         return response
+
+
+class TestFilterView(ListCreateAPIView):
+
+    queryset = models.TestFilterModel.objects.all()
+    serializer_class = serializers.TestFilterSerializer
+    # filter_fields = ["status", "text"]
+    filter_class = filters.TestFilterClass

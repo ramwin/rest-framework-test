@@ -250,3 +250,9 @@ class TestPropertySerializer3(serializers.ModelSerializer):
     class Meta:
         model = models.TestPropertyModel
         fields = ["id"]
+
+
+class TestFilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TestFilterModel
+        fields = "__all__"

@@ -12,3 +12,10 @@ class DateTimeFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = models.DateTimeModel
         fields = ["time", "time__gt"]
+
+
+class TestFilterClass(django_filters.rest_framework.FilterSet):
+
+    class Meta:
+        model = models.TestFilterModel
+        fields = ["status", "text", "id", "content", "many"]
