@@ -93,4 +93,4 @@ class TestFilterView(ListCreateAPIView):
     queryset = models.TestFilterModel.objects.all()
     serializer_class = serializers.TestFilterSerializer
     # filter_fields = ["status", "text"]
-    filter_class = filters.TestFilterClass
+    filter_class = filters.TestFilterClass2

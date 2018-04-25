@@ -32,3 +32,4 @@ class FilterAdmin(admin.ModelAdmin):
 
 admin.site.register(models.MyModel)
 admin.site.register(models.TestFilterThrough)
+admin.site.register(models.TestNullModel)
