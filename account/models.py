@@ -8,8 +8,6 @@ from django.contrib.auth.models import AbstractUser
 
 
 def myfunction():
-    print("calling myfunction")
-    print(123)
     return ""
 
 

@@ -3,12 +3,17 @@
 # Xiang Wang @ 2017-09-05 12:03:51
 
 
+import logging
+import json
+
 from django.core.validators import MaxValueValidator
 from django.utils import timezone
 
 from rest_framework import serializers
 
 from . import models
+
+log = logging.getLogger('django')
 
 
 class BasicModelSerializer(serializers.ModelSerializer):
@@ -217,6 +222,12 @@ class TestValidateSerializer(serializers.ModelSerializer):
         print(type(value))
         return value
 
+    def validate(self, data):
+        # 只有默认的validate通过了，并且自定义的validate也通过了才调用
+        print("calling TestValidateSerializer.validate")
+        print(data)
+        return data
+
 
 class TestToRepresentationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -256,3 +267,22 @@ class TestFilterSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TestFilterModel
         fields = "__all__"
+
+
+class TestManyCreateSerializer(serializers.ModelSerializer):
+    texts = BasicModelSerializer(many=True)
+
+    class Meta:
+        model = models.ManyModel
+        fields = ["texts", "id"]
+
+    def create(self, data):
+        log.info(data)
+        instance = models.ManyModel.objects.create()
+        for i in data["texts"]:
+            s = BasicModelSerializer(data=i)
+            s.is_valid(raise_exception=True)
+            s.save()
+            instance.texts.add(s.instance)
+            log.info(s.instance)
+        return instance

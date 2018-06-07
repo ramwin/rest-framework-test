@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^download/123/$', views.FileReturnView.as_view()),
     url(r'^download/.*$', views.FileReturnView.as_view()),
     url(r'^testfilter/', views.TestFilterView.as_view()),
+    url(r'^manycreate/', views.ManyCreateView.as_view()),
 ]

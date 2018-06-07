@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import logging
 import ipdb
+import json
 import tempfile
 
 from django.http import FileResponse, HttpResponse, StreamingHttpResponse
@@ -15,6 +17,8 @@ from . import models, serializers, filters
 from rest_framework.response import Response
 
 # Create your views here.
+
+log = logging.getLogger('django')
 
 
 class BasicModelView(APIView):
@@ -94,3 +98,24 @@ class TestFilterView(ListCreateAPIView):
     serializer_class = serializers.TestFilterSerializer
     # filter_fields = ["status", "text"]
     filter_class = filters.TestFilterClass2
+
+
+class ManyCreateView(CreateAPIView):
+    serializer_class = serializers.TestManyCreateSerializer
+
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data["texts"] = json.loads(data["texts"])
+        log.info(data)
+        data = { 
+            "texts": [
+                {"text": "text"},
+                {"text": "text"},
+                {"text": "text"},
+            ]
+        }
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        log.info(self.serializer_class(serializer.instance).data)
+        return Response(serializer.data)

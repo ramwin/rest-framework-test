@@ -140,3 +140,7 @@ class TestFilterThrough(models.Model):
 
     class Meta:
         verbose_name_plural = "测试过滤的中间键through"
+
+
+class TestOneToOneField(models.Model):
+    text = models.OneToOneField(BasicModel, on_delete=models.CASCADE)
