@@ -1,3 +1,4 @@
+django==1.11
 django-report-builder
 ipdb
 django-rest-framework

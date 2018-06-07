@@ -143,4 +143,4 @@ class TestFilterThrough(models.Model):
 
 
 class TestOneToOneField(models.Model):
-    text = models.OneToOneField(BasicModel, on_delete=models.CASCADE)
+    text = models.OneToOneField(BasicModel, on_delete=models.CASCADE, null=True)
