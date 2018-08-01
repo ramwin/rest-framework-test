@@ -9,8 +9,9 @@ import pytz
 from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 
+from django.db.models import F
 from django.test import TestCase
-from testapp.models import DateTimeModel
+from testapp.models import DateTimeModel, PartialModel
 from django.utils import timezone
 
 
@@ -44,3 +45,18 @@ class DateTimeTestCase(TestCase):
         out.write(style.HTTP_SERVER_ERROR("utc时间过滤"))
         for instance in queryset2:
             out.write(style.WARNING(instance.time))
+
+
+class ExpressionTestCase(TestCase):
+    """使用PartialModel来测试Query Expression"""
+
+    def setUp(self):
+        self.model1 = PartialModel.objects.create(
+            text1='text1', text2='text1')
+        self.model2 = PartialModel.objects.create(
+            text1='text1', text2='text2')
+
+    def test_f(self):
+        qs = PartialModel.objects.filter(text1=F('text2'))
+        self.assertIn(self.model1, qs)
+        self.assertNotIn(self.model2, qs)

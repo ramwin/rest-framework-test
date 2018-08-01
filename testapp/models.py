@@ -144,3 +144,11 @@ class TestFilterThrough(models.Model):
 
 class TestOneToOneField(models.Model):
     text = models.OneToOneField(BasicModel, on_delete=models.CASCADE, null=True)
+
+
+class TestFilterModel2(models.Model):
+    _bool = models.NullBooleanField()
+    _int = models.IntegerField()
+
+    def __str__(self):
+        return "boll: {}, int: {}".format(self._bool, self._int)

@@ -29,3 +29,16 @@ class TestFilterClass2(django_filters.rest_framework.FilterSet):
     class Meta:
         model = models.TestFilterModel
         fields = ["status", "text", "id", "content", "many", "many2", "many3"]
+
+
+class TestMethodFilter(django_filters.rest_framework.FilterSet):
+    _bool = django_filters.BooleanFilter(method="filter_bool")
+
+    def filter_bool(self, queryset, name, value):
+        print("name: {}".format(name))
+        print("value: {}".format(value))
+        return queryset
+
+    class Meta:
+        model = models.TestFilterModel2
+        fields = ["_bool"]
