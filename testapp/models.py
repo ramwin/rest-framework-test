@@ -79,7 +79,8 @@ class TestNullModel(models.Model):
     can_blank = models.TextField(blank=True)  # 可以不填或填"", 不能填 None
     can_default = models.TextField(default="")  # 可以不填, 但是不能为空或者None
     can = models.TextField()  # 必填, 不能为空
-    can_null_blank_integer = models.IntegerField(null=True, blank=True)  # 如果是integer，不填的话就会变成None
+    # 如果是integer，不填的话就会变成None
+    can_null_blank_integer = models.IntegerField(null=True, blank=True)
 
 
 class ForeignKeyModel2(models.Model):
@@ -124,8 +125,11 @@ class TestFilterModel(models.Model):
     text = models.ForeignKey(BasicModel, null=True)
     status = models.IntegerField(default=1)
     content = models.TextField(blank=True)
-    many = models.ManyToManyField(MyModel, blank=True)  # 如果参数有many=1&many=2 那就会过滤many=1或者many=2都返回
-    many2 = models.ManyToManyField(GetOrCreateModel, through="TestFilterThrough")  # 如果参数里面有many2=2就会过滤包含many2 = many2的
+    # 如果参数有 many=1&many=2 那就会过滤many=1或者many=2都返回
+    many = models.ManyToManyField(MyModel, blank=True)
+    # 如果参数里面有 many2=2就会过滤包含many2 = many2的
+    many2 = models.ManyToManyField(
+        GetOrCreateModel, through="TestFilterThrough")
 
     class Meta:
         verbose_name_plural = "测试过滤的Model"
@@ -143,7 +147,8 @@ class TestFilterThrough(models.Model):
 
 
 class TestOneToOneField(models.Model):
-    text = models.OneToOneField(BasicModel, on_delete=models.CASCADE, null=True)
+    text = models.OneToOneField(
+        BasicModel, on_delete=models.CASCADE, null=True)
 
 
 class TestFilterModel2(models.Model):
@@ -152,3 +157,15 @@ class TestFilterModel2(models.Model):
 
     def __str__(self):
         return "boll: {}, int: {}".format(self._bool, self._int)
+
+
+class TestMethodTriggerModel(models.Model):
+
+    text = models.CharField(max_length=255, blank=False)
+
+    def __str__(self):
+        return "BasicModel: {}, id: {}".format(self.text, self.id)
+
+    def save(self, *args, **kwargs):
+        print("TestMethodTriggerModel.save触发")
+        return super(TestMethodTriggerModel, self).save(*args, **kwargs)
