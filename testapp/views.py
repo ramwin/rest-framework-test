@@ -21,7 +21,7 @@ from rest_framework.response import Response
 log = logging.getLogger('django')
 
 
-class BasicModelView(APIView):
+class BasicModelView(ListCreateAPIView):
     """
     get:
     返回Text列表
@@ -30,12 +30,17 @@ class BasicModelView(APIView):
     创建Text
     """
     queryset = models.BasicModel.objects.all()
-    # serializer_class = serializers.BasicModelSerializer
+    serializer_class = serializers.BasicModelSerializer
     filter_fields = ['text']
     http_method_names = ['post']
 
-    def post(self, request):
-        return Response('ew')
+    def get_serializer(self, *args, **kwargs):
+        # import ipdb
+        # ipdb.set_trace()
+        if 'data' in kwargs:
+            data = kwargs['data']
+            data['text'] = 'new text'
+        return super(BasicModelView, self).get_serializer(*args, **kwargs)
 
 
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
