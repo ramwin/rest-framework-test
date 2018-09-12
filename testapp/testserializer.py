@@ -15,6 +15,10 @@ from . import serializers
 
 out = OutputWrapper(sys.stdout)
 style = color_style()
+
+def info(text):
+    out.write(style.HTTP_INFO(text))
+
 class MySerializerTestCase(TestCase):
 
     def test_hidden(self):
@@ -165,3 +169,9 @@ class MySerializerTestCase(TestCase):
         serializer1 = serializers.TestPropertySerializer(data=data)
         serializer1.is_valid()
         serializer1.save()
+
+    def test_source(self):
+        info("准备测试source这个参数")
+        basicmodel = BasicModel.objects.create(text='text')
+        fkm = ForeignKeyModel2.objects.create()
+        info(serializers.TestSourceSerializer(fkm).data)

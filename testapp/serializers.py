@@ -286,3 +286,11 @@ class TestManyCreateSerializer(serializers.ModelSerializer):
             instance.texts.add(s.instance)
             log.info(s.instance)
         return instance
+
+
+class TestSourceSerializer(serializers.ModelSerializer):
+    text = serializers.CharField(source="text.text")
+
+    class Meta:
+        model = models.ForeignKeyModel2
+        fields = ["id", "text"]
