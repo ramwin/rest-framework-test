@@ -289,8 +289,38 @@ class TestManyCreateSerializer(serializers.ModelSerializer):
 
 
 class TestSourceSerializer(serializers.ModelSerializer):
+    # text = serializers.CharField(source="text.text")  # 直接save报错
     text = serializers.CharField(source="text.text")
 
     class Meta:
         model = models.ForeignKeyModel2
         fields = ["id", "text"]
+
+    def save(self, **kwargs):
+        validated_data = dict(
+            list(self.validated_data.items()) + 
+            list(kwargs.items())
+        )
+        text = validated_data.pop("text")
+        print(text)
+        if self.instance is not None:
+            self.instance = self.update(self.instance, validated_data)
+        else:
+            self.instance = self.create(validated_data)
+            assert self.instance is not None, (
+                '`create()` did not return an object instance.'
+            )
+        return self.instance
+
+
+class DateTimeModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.DateTimeModel
+        fields = ["time"]
+
+
+class TestUniqueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TestUniqueModel
+        fields = "__all__"

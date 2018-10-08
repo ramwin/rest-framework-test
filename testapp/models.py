@@ -41,7 +41,7 @@ class ManyModel(models.Model):
 
 
 class DateTimeModel(models.Model):
-    time = models.DateTimeField()
+    time = models.DateTimeField()  # 可以直接使用datetime对象
 
     def __str__(self):
         return "id:%d, time: %s" % (self.id or 0, self.time)
@@ -169,3 +169,11 @@ class TestMethodTriggerModel(models.Model):
     def save(self, *args, **kwargs):
         print("TestMethodTriggerModel.save触发")
         return super(TestMethodTriggerModel, self).save(*args, **kwargs)
+
+
+class TestUniqueModel(models.Model):
+    """如果有null=True,就可以随便，否则就会报错。空字符串也是值"""
+    text1 = models.CharField(max_length=42, unique=True)
+    text2 = models.CharField(max_length=42, unique=True, blank=True)
+    text3 = models.CharField(max_length=42, unique=True, null=True)
+    text4 = models.CharField(max_length=42, unique=True, blank=True, null=True)

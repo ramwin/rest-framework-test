@@ -4,11 +4,13 @@
 
 
 import json
+import time
 import sys
 
 from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 from django.test import TestCase
+from django.utils import timezone
 from .models import *
 from . import serializers
 
@@ -16,10 +18,29 @@ from . import serializers
 out = OutputWrapper(sys.stdout)
 style = color_style()
 
+
+def head(text):
+    out.write(style.SQL_TABLE(text))
+
+def head1(text):
+    out.write(style.MIGRATE_HEADING(text))
+
+def list1(text):
+    out.write(style.SQL_FIELD(text))
+
+def list2(text):
+    out.write(style.SQL_COLTYPE(text))
+
 def info(text):
     out.write(style.HTTP_INFO(text))
 
 class MySerializerTestCase(TestCase):
+
+    def test_datetime(self):
+        info("准备测试datetime field")
+        data = {'time': timezone.now()}
+        serializers.DateTimeModelSerializer(data=data).is_valid(raise_exception=True)
+        info("可以直接使用datetime对象")
 
     def test_hidden(self):
         out.write(style.HTTP_INFO("准备测试hiddenfield"))
@@ -171,7 +192,37 @@ class MySerializerTestCase(TestCase):
         serializer1.save()
 
     def test_source(self):
-        info("准备测试source这个参数")
+        head("准备测试source这个参数")
+        list1("* 测试如果外键为None, 字段显示什么")
         basicmodel = BasicModel.objects.create(text='text')
         fkm = ForeignKeyModel2.objects.create()
         info(serializers.TestSourceSerializer(fkm).data)
+        info("可以看到显示的是None")
+        list1("* 测试如果save, 会发生什么, 他的数据竟然是 {'text': 'text'}, 不是简单的text")
+        list2("    1. 如果instance的外键为None")
+        testsource_ser = serializers.TestSourceSerializer(
+            instance=fkm, data={"text": "text"})
+        testsource_ser.is_valid(raise_exception=True)
+        testsource_ser.save()
+        list2("    2. 如果instance的外键不是None, 仍然是 {'text': 'text'}")
+        fkm.text = basicmodel
+        fkm.save()
+        testsource_ser = serializers.TestSourceSerializer(
+            instance=fkm, data={"text": "text"})
+        testsource_ser.is_valid(raise_exception=True)
+        testsource_ser.save()
+
+    def test_extra(self):
+        info("准备测试如果Meta.fields里面少了字段怎么办")
+        info("会报错")
+        return
+        from rest_framework import serializers
+
+        class ExtraSerializer(serializers.ModelSerializer):
+            text = serializers.CharField()  # 不行，如果定义了，Meta里面必须有
+            class Meta:
+                model = BasicModel
+                fields = ["id"]
+
+        basic_model = BasicModel.objects.first()
+        info(ExtraSerializer(basic_model).data)
