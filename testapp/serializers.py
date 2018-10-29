@@ -324,3 +324,9 @@ class TestUniqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TestUniqueModel
         fields = "__all__"
+
+
+class TestDecimalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TestDecimalModel
+        fields = ["id", "deci"]

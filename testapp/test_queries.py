@@ -116,3 +116,10 @@ class TestMethodTestCase(TestCase):
         log.log("测试update是否触发save")
         TestMethodTriggerModel.objects.update(text='text1')  # 并没有触发save
         log.log("触发了吗")
+
+
+class ForeignKeyFilterTestCase(TestCase):
+
+    def setUp(self):
+        log.info("准备测试外键的过滤机制")
+        log.info("暂时不测试了，之前做过，有文档")

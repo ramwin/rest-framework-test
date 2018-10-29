@@ -177,3 +177,10 @@ class TestUniqueModel(models.Model):
     text2 = models.CharField(max_length=42, unique=True, blank=True)
     text3 = models.CharField(max_length=42, unique=True, null=True)
     text4 = models.CharField(max_length=42, unique=True, blank=True, null=True)
+
+
+class TestDecimalModel(models.Model):
+    deci = models.DecimalField(max_digits=3, decimal_places=2, default=0, blank=True)
+
+    class Meta:
+        verbose_name_plural = "测试DecimalField"

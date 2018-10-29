@@ -30,6 +30,12 @@ class FilterAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(models.TestDecimalModel)
+class TestDecimalAdmin(admin.ModelAdmin):
+    list_display = ["id", "deci"]
+    pass
+
+
 admin.site.register(models.MyModel)
 admin.site.register(models.TestFilterThrough)
 admin.site.register(models.TestNullModel)
