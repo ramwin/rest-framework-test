@@ -21,7 +21,7 @@ from rest_framework_swagger.views import get_swagger_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^docs/', include_docs_urls(title='My API title')),
-    url(r'testapp/', include('testapp.urls')),
+    url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
     url(r'^report_builder/', include('report_builder.urls')),
     url(r'swagger/', get_swagger_view(title="文档")),
 ]

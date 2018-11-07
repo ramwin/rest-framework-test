@@ -5,4 +5,5 @@ from django.apps import AppConfig
 
 
 class TestappConfig(AppConfig):
-    name = 'testapp'
+    name = 'testapp_name'
+    need_login = True

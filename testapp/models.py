@@ -180,7 +180,7 @@ class TestUniqueModel(models.Model):
 
 
 class TestDecimalModel(models.Model):
-    deci = models.DecimalField(max_digits=3, decimal_places=2, default=0, blank=True)
+    deci = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
 
     class Meta:
         verbose_name_plural = "测试DecimalField"

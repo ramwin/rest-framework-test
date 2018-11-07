@@ -9,7 +9,7 @@ from . import views
 urlpatterns = [
     url('^basicmodel/$', views.BasicModelView.as_view()),
     url('^basicmodel/(?P<pk>\d+)/$', views.BasicModelDetailView.as_view()),
-    url(r'^file/$', views.FileView.as_view()),
+    url(r'^file/$', views.FileView.as_view(), name="file"),
     url('^partialmodel/(?P<pk>\d+)/$', views.PartialModelPatchView.as_view()),
     url(r'^download/$', views.FileReturnView.as_view()),
     url(r'^download/123/$', views.FileReturnView.as_view()),
