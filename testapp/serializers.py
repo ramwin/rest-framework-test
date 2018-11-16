@@ -290,7 +290,7 @@ class TestManyCreateSerializer(serializers.ModelSerializer):
 
 class TestSourceSerializer(serializers.ModelSerializer):
     # text = serializers.CharField(source="text.text")  # 直接save报错
-    text = serializers.CharField(source="text.text")
+    text = serializers.CharField(source="text.text", default=None)
 
     class Meta:
         model = models.ForeignKeyModel2

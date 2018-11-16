@@ -138,7 +138,6 @@ class MySerializerTestCase(TestCase):
         out.write(style.ERROR(s.errors))
 
     def test_regex(self):
-        return
         print("测试正则表达式的serializer")
         data_list = [
             {},
@@ -193,9 +192,10 @@ class MySerializerTestCase(TestCase):
 
     def test_source(self):
         head("准备测试source这个参数")
-        list1("* 测试如果外键为None, 字段显示什么")
+        list1("* 测试如果外键为None, 这个field必须设置default, 不然会报错")
         basicmodel = BasicModel.objects.create(text='text')
         fkm = ForeignKeyModel2.objects.create()
+        info("数据创建成功")
         info(serializers.TestSourceSerializer(fkm).data)
         info("可以看到显示的是None")
         list1("* 测试如果save, 会发生什么, 他的数据竟然是 {'text': 'text'}, 不是简单的text")
