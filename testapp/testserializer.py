@@ -226,3 +226,24 @@ class MySerializerTestCase(TestCase):
 
         basic_model = BasicModel.objects.first()
         info(ExtraSerializer(basic_model).data)
+
+    def test_id(self):
+        head("准备测试id这个field")
+        list1("* 测试create的时候带id")
+        data = {"id": 2, "text": "文字"}
+        info("data: {}".format(data))
+        serializer = serializers.TestIdSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        info("serializer.data: {}".format(serializer.data))
+        info("如果create的时候带了id参数, validated_data会是不存在id, 并且save的时候id会自动修改")
+        list1("* 测试patch的时候带id")
+        instance = serializer.instance
+        data2 = {"id": 4, "text": "文字2"}
+        info("data: {}".format(data))
+        serializer = serializers.TestIdSerializer(instance, data=data)
+        serializer.is_valid(raise_exception=True)
+        info("serializer.validated_data: {}".format(serializer.validated_data))
+        serializer.save()
+        info("serializer.data: {}".format(serializer.data))
+        info("如果put的时候带了id参数, validated_data也会过滤掉这个id")

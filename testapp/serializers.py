@@ -330,3 +330,10 @@ class TestDecimalSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TestDecimalModel
         fields = ["id", "deci"]
+
+
+class TestIdSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.BasicModel
+        fields = ["id", "text"]
