@@ -39,8 +39,14 @@ class BasicModelView(ListCreateAPIView):
         # ipdb.set_trace()
         if 'data' in kwargs:
             data = kwargs['data']
-            data['text'] = 'new text'
+            # data['text'] = 'new text'
         return super(BasicModelView, self).get_serializer(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        log.info(request.data)
+        log.info(type(request.data))
+        ipdb.set_trace()
+        return super(BasicModelView, self).post(request, *args, **kwargs)
 
 
 class BasicModelDetailView(RetrieveUpdateDestroyAPIView):

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'account',
     'testapp',
     'report_builder',
+    "book",
 ]
 
 MIDDLEWARE = [

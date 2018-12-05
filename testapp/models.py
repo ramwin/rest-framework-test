@@ -184,3 +184,11 @@ class TestDecimalModel(models.Model):
 
     class Meta:
         verbose_name_plural = "测试DecimalField"
+
+
+class Student(models.Model):
+    name = models.CharField(max_length=25)
+    friends = models.ManyToManyField("self")
+
+    def __str__(self):
+        return self.name
