@@ -11,7 +11,7 @@ from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 
 from django.test import TestCase
-from testapp.models import DateTimeModel, Student
+from testapp.models import DateTimeModel, Student, Teacher
 from testapp import models
 from django.utils import timezone
 
@@ -53,7 +53,8 @@ class FieldTestCase(TestCase):
         out.write(style.HTTP_INFO(models.TestOneToOneField.objects.all()))
 
     def test_manytomany_field(self):
-        head1("## 测试ManyToManyField")
+        head1("\n## 测试ManyToManyField")
+        list1("* 如果symmetrical=True默认")
         student = Student.objects.create(name="George")
         student2 = Student.objects.create(name="Li Lei")
         student3 = Student.objects.create(name="Han Mei")
@@ -62,6 +63,20 @@ class FieldTestCase(TestCase):
         student3.friends.add(student2)
         print("student2的好友有:", end=" ")
         print(student2.friends.all())
-        print("认为我是好友的有:", end=" ")
-        print(student2.friends_set.all())
+        print("认为我是好友的有(只能是一样的):", end=" ")
+        # print(student2.student_set.all()) 这个会报错
+        print(student2.friends.all())
+        list1("* 如果symmetrical=False")
+        teacher = Teacher.objects.create(name="王主任")
+        teacher2 = Teacher.objects.create(name="小李主任")
+        teacher3 = Teacher.objects.create(name="小红主任")
+        teacher2.teachers.add(teacher)
+        teacher2.teachers.add(teacher3)
+        teacher3.teachers.add(teacher)
+        print("给teacher3指导过的有:", end=" ")
+        print(teacher3.teachers.all())
+        print("teacher3指导过的人有:", end=" ")
+        # import ipdb
+        # ipdb.set_trace()
+        print(teacher3.teacher_set.all())
         head1("ManyToManyField测试完毕")
