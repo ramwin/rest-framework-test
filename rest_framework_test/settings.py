@@ -33,6 +33,7 @@ AUTH_USER_MODEL = 'account.User'
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'testapp',
     'report_builder',
     "book",
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -199,5 +201,14 @@ LOGGING = {
                          'warning_file', 'error_file', 'console'],
             'level': "INFO",
         }
+    },
+}
+ASGI_APPLICATION = "rest_framework_test.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
     },
 }
