@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
     url(r'^report_builder/', include('report_builder.urls')),
     url(r'swagger/', get_swagger_view(title="文档")),
-    url(r'^chat/', include('chat.urls')),
+    url(r'^wsapp/chat/', include('chat.urls')),
 ]
