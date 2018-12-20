@@ -85,7 +85,7 @@ class TestNullModel(models.Model):
 
 class ForeignKeyModel2(models.Model):
     """测试上传用外键，下载用字典"""
-    text = models.ForeignKey(BasicModel, null=True)
+    text = models.ForeignKey(BasicModel, null=True, on_delete=models.SET_NULL)
 
 
 class TestMethodModel(models.Model):
@@ -122,7 +122,7 @@ class TestAdminModel(models.Model):
 
 
 class TestFilterModel(models.Model):
-    text = models.ForeignKey(BasicModel, null=True)
+    text = models.ForeignKey(BasicModel, null=True, on_delete=models.SET_NULL)
     status = models.IntegerField(default=1)
     content = models.TextField(blank=True)
     # 如果参数有 many=1&many=2 那就会过滤many=1或者many=2都返回
@@ -139,8 +139,8 @@ class TestFilterModel(models.Model):
 
 
 class TestFilterThrough(models.Model):
-    model1 = models.ForeignKey(TestFilterModel)
-    model2 = models.ForeignKey(GetOrCreateModel)
+    model1 = models.ForeignKey(TestFilterModel, on_delete=models.CASCADE)
+    model2 = models.ForeignKey(GetOrCreateModel, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "测试过滤的中间键through"

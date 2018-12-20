@@ -4,3 +4,4 @@ ipdb
 django-rest-framework
 django-rest-swagger
 django-filter
+djcacheutils

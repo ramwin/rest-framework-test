@@ -6,6 +6,8 @@
 from django.conf.urls import url
 from . import views
 
+app_name = "testapp"
+
 urlpatterns = [
     url('^basicmodel/$', views.BasicModelView.as_view()),
     url('^basicmodel/(?P<pk>\d+)/$', views.BasicModelDetailView.as_view()),
