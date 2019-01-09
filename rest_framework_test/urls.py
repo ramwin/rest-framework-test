@@ -15,16 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.urls import path, include
+# from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
 from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^docs/', include_docs_urls(title='My API title')),
-    # url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
+    url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
     url(r'^report_builder/', include('report_builder.urls')),
     url(r'swagger/', get_swagger_view(title="文档")),
     url(r'^wsapp/chat/', include('chat.urls')),
-    path("testapp/", include("testapp.urls", namespace="testapp_namespace")),
+    # path("testapp/", include("testapp.urls", namespace="testapp_namespace")),
 ]

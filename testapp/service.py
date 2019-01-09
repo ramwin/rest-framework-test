@@ -7,7 +7,7 @@ import time
 from django.views.decorators.cache import cache_control
 
 
-@cache_control(max_age=60)
+# @cache_control(max_age=60)
 def slow_function(sleep=0):
-    time.sleep(sleep)
+    # time.sleep(sleep)
     return sleep

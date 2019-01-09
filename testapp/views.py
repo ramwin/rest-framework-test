@@ -45,7 +45,7 @@ class BasicModelView(ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         log.info(request.data)
         log.info(type(request.data))
-        ipdb.set_trace()
+        # ipdb.set_trace()
         return super(BasicModelView, self).post(request, *args, **kwargs)
 
 
