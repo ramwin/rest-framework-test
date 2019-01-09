@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # Xiang Wang @ 2017-09-21 15:16:54
 
+# 这里用来测试rest_framework的serializer
+
 
 import json
 import time
@@ -11,6 +13,7 @@ from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 from django.test import TestCase
 from django.utils import timezone
+from testapp import head, head1, list1, list2, info
 from .models import *
 from . import serializers
 
@@ -19,20 +22,6 @@ out = OutputWrapper(sys.stdout)
 style = color_style()
 
 
-def head(text):
-    out.write(style.SQL_TABLE(text))
-
-def head1(text):
-    out.write(style.MIGRATE_HEADING(text))
-
-def list1(text):
-    out.write(style.SQL_FIELD(text))
-
-def list2(text):
-    out.write(style.SQL_COLTYPE(text))
-
-def info(text):
-    out.write(style.HTTP_INFO(text))
 
 class MySerializerTestCase(TestCase):
 
@@ -247,3 +236,17 @@ class MySerializerTestCase(TestCase):
         serializer.save()
         info("serializer.data: {}".format(serializer.data))
         info("如果put的时候带了id参数, validated_data也会过滤掉这个id")
+
+    def test_limit_nested_serializer(self):
+        head("# 准备测试nest的字段,能否限制数量")
+        # python3 manage.py test
+        # testapp.testserializer.MySerializerTestCase.test_limit_nested_serializer
+        text1 = BasicModel.objects.create(text="text1")
+        text2 = BasicModel.objects.create(text="text2")
+        text3 = BasicModel.objects.create(text="text3")
+        filt1 = ManyModel.objects.create()
+        filt1.texts.add(text1)
+        filt1.texts.add(text2)
+        filt1.texts.add(text3)
+        info(serializers.TestLimitSerializer(filt1).data)
+        info("实现不了, 直接用SerializerMethodField吧")

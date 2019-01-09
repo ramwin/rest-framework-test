@@ -337,3 +337,11 @@ class TestIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BasicModel
         fields = ["id", "text"]
+
+
+class TestLimitSerializer(serializers.ModelSerializer):
+    texts = BasicModelSerializer(many=True, html_cutoff=1)
+
+    class Meta:
+        model = models.ManyModel
+        fields = ["id", "texts"]
