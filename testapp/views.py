@@ -13,6 +13,7 @@ from rest_framework.generics import (
     ListAPIView,
 )
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from . import models, serializers, filters
 from rest_framework.response import Response
 
@@ -130,3 +131,9 @@ class ManyCreateView(CreateAPIView):
         serializer.save()
         log.info(self.serializer_class(serializer.instance).data)
         return Response(serializer.data)
+
+
+class TestFilterViewSet(ModelViewSet):
+    queryset = models.TestFilter.objects.all()
+    serializer_class = serializers.TestFilterSerializer
+    filter_class = filters.TestFilterClass3

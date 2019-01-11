@@ -340,8 +340,15 @@ class TestIdSerializer(serializers.ModelSerializer):
 
 
 class TestLimitSerializer(serializers.ModelSerializer):
-    texts = BasicModelSerializer(many=True, html_cutoff=1)
+    texts = BasicModelSerializer(many=True)
 
     class Meta:
         model = models.ManyModel
         fields = ["id", "texts"]
+
+
+class TestFilterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.TestFilter
+        fields = ["_type", "id"]

@@ -200,3 +200,12 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TestFilter(models.Model):
+    TYPE_CHOICE = (
+        ("类型1", "类型1"),
+        ("类型2", "类型2"),
+        ("类型3", "类型3"),
+    )
+    _type = models.CharField("类型", choices=TYPE_CHOICE, max_length=5)

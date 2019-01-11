@@ -8,9 +8,11 @@ import pytz
 
 from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
+from django.test import Client
 
 from django.test import TestCase
 from testapp import models, filters
+from testapp import head, head1, list1, list2, info
 from django.utils import timezone
 
 
@@ -31,9 +33,28 @@ class FilterTestCase(TestCase):
         ]
         for data_1 in datas:
             for data in data_1:
-                print(data)
+                # print(data)
                 models.TestFilterModel2.objects.create(**data)
 
     def test_method_filter(self):
         qs = filters.TestMethodFilter({"_bool": False}, models.TestFilterModel2.objects.all()).qs
         out.write(style.HTTP_INFO(qs))
+
+    def test_multichoice_filter(self):
+        head("# 准备测试multichoice filter")
+        models.TestFilter.objects.create(
+            _type="类型1")
+        models.TestFilter.objects.create(
+            _type="类型1")
+        models.TestFilter.objects.create(
+            _type="类型2")
+        models.TestFilter.objects.create(
+            _type="类型3")
+        client = Client()
+        response = client.get(
+            "/testapp/testfilter/?_type=类型1&_type=类型2",
+            headers={"accept": "application/json"}
+            )
+        # import ipdb
+        # ipdb.set_trace()
+        info(response.data)

@@ -42,3 +42,13 @@ class TestMethodFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = models.TestFilterModel2
         fields = ["_bool"]
+
+
+class TestFilterClass3(django_filters.rest_framework.FilterSet):
+    _type = django_filters.MultipleChoiceFilter(
+        choices=models.TestFilter.TYPE_CHOICE
+    )
+
+    class Meta:
+        model = models.TestFilter
+        fields = ["_type"]

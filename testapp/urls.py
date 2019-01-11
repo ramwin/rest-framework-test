@@ -5,10 +5,14 @@
 
 from django.conf.urls import url
 from . import views
+from rest_framework import routers
+
 
 app_name = "testapp"
+router = routers.SimpleRouter()
+router.register(r'testfilter', views.TestFilterViewSet)
 
-urlpatterns = [
+urlpatterns = router.urls + [
     url('^basicmodel/$', views.BasicModelView.as_view()),
     url('^basicmodel/(?P<pk>\d+)/$', views.BasicModelDetailView.as_view()),
     url(r'^file/$', views.FileView.as_view(), name="file"),
