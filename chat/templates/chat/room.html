@@ -16,6 +16,11 @@
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
+    console.info("当前websocket状态" + chatSocket.readyState)
+
+    setInterval(
+      res=>{console.info("当前websocket状态" + chatSocket.readyState)},
+      1000)
 
     chatSocket.onmessage = function(e) {
       var data = JSON.parse(e.data);
