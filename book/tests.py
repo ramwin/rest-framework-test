@@ -55,21 +55,21 @@ class MyBookAppTestCase(TestCase):
             publisher=publisher_sjtu,
             pubdate=timezone.datetime(2018,1,1)
         )
-        book_resume.authors = [author_wx]
+        book_resume.authors.set([author_wx])
         book_resume.save()
 
         book_santi = Book.objects.create(
             name="三体I - 地球往事", pages=1000, price=23.0, rating=1,
             publisher=publisher_science,
             pubdate=date(2008,1,1))
-        book_santi.authors = [author_lcx]
+        book_santi.authors.set([author_lcx])
         book_santi.save()
 
         book_santi_II = Book.objects.create(
             name="三体II - 黑暗森林", pages=470, price=43.0, rating=2,
             publisher=publisher_science,
             pubdate=date(2008,5,1))
-        book_santi_II.authors = [author_lcx]
+        book_santi_II.authors.set([author_lcx])
         book_santi_II.save()
 
 

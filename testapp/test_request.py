@@ -18,4 +18,3 @@ class RequestTestCase(TestCase):
         list1("* 测试request.data类型,是否可变")
         client = Client()
         response = client.post("/testapp/basicmodel/", {"text": "text"})
-        # ipdb.set_trace()

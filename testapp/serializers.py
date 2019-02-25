@@ -347,8 +347,8 @@ class TestLimitSerializer(serializers.ModelSerializer):
         fields = ["id", "texts"]
 
 
-class TestFilterSerializer(serializers.ModelSerializer):
+class TestFilterSerializer2(serializers.ModelSerializer):
 
     class Meta:
         model = models.TestFilter
-        fields = ["_type", "id"]
+        fields = ["_type", "id", "basic_model"]

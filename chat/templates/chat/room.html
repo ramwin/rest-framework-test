@@ -14,17 +14,18 @@
     var roomName = {{ room_name_json }};
 
     var chatSocket = new WebSocket(
-        'wss://' + window.location.host +
+        'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
 
     chatSocket.onmessage = function(e) {
-        var data = JSON.parse(e.data);
-        var message = data['message'];
-        document.querySelector('#chat-log').value += (message + '\n');
+      var data = JSON.parse(e.data);
+      var message = data['message'];
+      document.querySelector('#chat-log').value += (message + '\n');
     };
 
     chatSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
+      console.error('Chat socket closed unexpectedly');
+      console.log(e);
     };
 
     document.querySelector('#chat-message-input').focus();

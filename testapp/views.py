@@ -135,5 +135,5 @@ class ManyCreateView(CreateAPIView):
 
 class TestFilterViewSet(ModelViewSet):
     queryset = models.TestFilter.objects.all()
-    serializer_class = serializers.TestFilterSerializer
+    serializer_class = serializers.TestFilterSerializer2
     filter_class = filters.TestFilterClass3

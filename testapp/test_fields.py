@@ -36,15 +36,16 @@ def info(text):
     out.write(style.HTTP_INFO(text))
 
 
+head("# 准备测试Field")
+
 
 class FieldTestCase(TestCase):
 
     def setUp(self):
-        head("# 准备测试Field")
         pass
 
     def test_onetoone_field(self):
-        head1("## 测试OneToOneField")
+        head1("\n## 测试OneToOneField")
         text = models.BasicModel.objects.create(text="text")
         onetoone = models.TestOneToOneField.objects.create(text=text)
         text.delete()

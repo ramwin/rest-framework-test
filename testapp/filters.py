@@ -48,7 +48,11 @@ class TestFilterClass3(django_filters.rest_framework.FilterSet):
     _type = django_filters.MultipleChoiceFilter(
         choices=models.TestFilter.TYPE_CHOICE
     )
+    basic_model = django_filters.ModelMultipleChoiceFilter(
+        queryset=models.BasicModel.objects.all(),
+        distinct=True
+    )
 
     class Meta:
         model = models.TestFilter
-        fields = ["_type"]
+        fields = ["_type", "basic_model"]

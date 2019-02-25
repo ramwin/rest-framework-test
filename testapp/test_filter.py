@@ -42,19 +42,38 @@ class FilterTestCase(TestCase):
 
     def test_multichoice_filter(self):
         head("# 准备测试multichoice filter")
+        head1("## 过滤CharField")
         models.TestFilter.objects.create(
             _type="类型1")
-        models.TestFilter.objects.create(
+        fenlei1 = models.BasicModel.objects.create(text="分类1")
+        fenlei2 = models.BasicModel.objects.create(text="分类2")
+        fenlei3 = models.BasicModel.objects.create(text="分类3")
+        instance1 = models.TestFilter.objects.create(
             _type="类型1")
-        models.TestFilter.objects.create(
+        instance2 = models.TestFilter.objects.create(
             _type="类型2")
-        models.TestFilter.objects.create(
+        instance3 = models.TestFilter.objects.create(
             _type="类型3")
+        instance1.basic_model.add(fenlei1)
+        instance2.basic_model.add(fenlei2)
+        instance3.basic_model.add(fenlei3)
         client = Client()
+        info("找到类型1和类型2的")
         response = client.get(
             "/testapp/testfilter/?_type=类型1&_type=类型2",
             headers={"accept": "application/json"}
             )
         # import ipdb
         # ipdb.set_trace()
+        info(response.data)
+        head1("## 过滤ManyToManyField")
+        response = client.get(
+            "/testapp/testfilter/?basic_model=1&basic_model=2",
+            headers={"accept": "application/json"}
+            )
+        info(response.data)
+        response = client.get(
+            "/testapp/testfilter/?basic_model=1&basic_model=3",
+            headers={"accept": "application/json"}
+            )
         info(response.data)

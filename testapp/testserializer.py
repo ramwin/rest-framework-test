@@ -20,10 +20,13 @@ from . import serializers
 
 out = OutputWrapper(sys.stdout)
 style = color_style()
-
+head("# 测试rest-framework的Serializer")
 
 
 class MySerializerTestCase(TestCase):
+
+    def setUp(self):
+        pass
 
     def test_datetime(self):
         info("准备测试datetime field")
@@ -52,6 +55,7 @@ class MySerializerTestCase(TestCase):
     def test_null(self):
         # print("不测试null")
         # return
+        head1("## 测试Null")
         data_list = [
             {},
             {"can": ""},

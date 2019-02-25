@@ -209,3 +209,4 @@ class TestFilter(models.Model):
         ("类型3", "类型3"),
     )
     _type = models.CharField("类型", choices=TYPE_CHOICE, max_length=5)
+    basic_model = models.ManyToManyField(BasicModel)

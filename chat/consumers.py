@@ -23,6 +23,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         # Leave room group
+        print("用户关闭了链接: code: {}".format(close_code))
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
