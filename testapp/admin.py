@@ -39,3 +39,8 @@ class TestDecimalAdmin(admin.ModelAdmin):
 admin.site.register(models.MyModel)
 admin.site.register(models.TestFilterThrough)
 admin.site.register(models.TestNullModel)
+
+
+@admin.register(models.TestAdminPermissionModel)
+class AdminPermissionAdmin(admin.ModelAdmin):
+    pass

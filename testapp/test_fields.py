@@ -80,4 +80,10 @@ class FieldTestCase(TestCase):
         # import ipdb
         # ipdb.set_trace()
         print(teacher3.teacher_set.all())
+        list1("* 检查是否存在")
+        new_student = Student.objects.create(name="New Student")
+        print("现在new_student的friends里面有没有George", student in new_student.friends.all())
+        result = new_student.friends.add(student)
+        print("add以后现在new_student的friends里面有没有George", student in new_student.friends.all())
+        print("但是add的return: ", result)
         head1("ManyToManyField测试完毕")

@@ -2,9 +2,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth import get_user_model
 # from django.contrib.gis.db import models as gismodels
 
 # Create your models here.
+
+User = get_user_model()
 
 
 class BasicModel(models.Model):
@@ -210,3 +213,10 @@ class TestFilter(models.Model):
     )
     _type = models.CharField("类型", choices=TYPE_CHOICE, max_length=5)
     basic_model = models.ManyToManyField(BasicModel)
+
+
+class TestAdminPermissionModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "测试admin的权限"
