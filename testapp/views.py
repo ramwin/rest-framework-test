@@ -8,6 +8,8 @@ import tempfile
 
 from django.http import FileResponse, HttpResponse, StreamingHttpResponse
 from django.shortcuts import render
+from django.views.generic.base import TemplateView
+
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView,
     ListAPIView,
@@ -137,3 +139,13 @@ class TestFilterViewSet(ModelViewSet):
     queryset = models.TestFilter.objects.all()
     serializer_class = serializers.TestFilterSerializer2
     filter_class = filters.TestFilterClass3
+
+
+class URLView(TemplateView):
+    template_name = "testapp/测试模板.html"
+
+    def get_template_names(self):
+        if self.request.resolver_match.kwargs["scene"] == "admin":
+            return ["testapp/测试模板_admin.html"]
+        else:
+            return [self.template_name]

@@ -22,4 +22,8 @@ urlpatterns = router.urls + [
     url(r'^download/.*$', views.FileReturnView.as_view()),
     url(r'^testfilter/', views.TestFilterView.as_view()),
     url(r'^manycreate/', views.ManyCreateView.as_view()),
+    url(r'^url/', views.URLView.as_view(),
+        {"scene": "normal"}, name="url"),
+    url(r'^url2/', views.URLView.as_view(),
+        {"scene": "admin"}, name="url"),
 ]

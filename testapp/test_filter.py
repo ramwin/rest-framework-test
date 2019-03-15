@@ -37,7 +37,7 @@ class FilterTestCase(TestCase):
                 models.TestFilterModel2.objects.create(**data)
 
     def test_method_filter(self):
-        qs = filters.TestMethodFilter({"_bool": False}, models.TestFilterModel2.objects.all()).qs
+        qs = filters.TestMethodFilter({"_bool": 'true'}, models.TestFilterModel2.objects.all()).qs
         out.write(style.HTTP_INFO(qs))
 
     def test_multichoice_filter(self):
