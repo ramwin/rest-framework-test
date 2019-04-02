@@ -140,6 +140,16 @@ class TestFilterViewSet(ModelViewSet):
     serializer_class = serializers.TestFilterSerializer2
     filter_class = filters.TestFilterClass3
 
+    def post(self, request, *args, **kwargs):
+        log.info("调用TestFilterViewSet.post")
+        return super(TestFilterViewSet, self).post(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        log.info("调用TestFilterViewSet.create")
+        return Response({"detail":"不能调用哦"}, status=409)
+        response = super(TestFilterViewSet, self).create(request, *args, **kwargs)
+        return response
+
 
 class URLView(TemplateView):
     template_name = "testapp/测试模板.html"

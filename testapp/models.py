@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from datetime import timedelta
 # from django.contrib.gis.db import models as gismodels
 
 # Create your models here.
@@ -45,6 +46,7 @@ class ManyModel(models.Model):
 
 class DateTimeModel(models.Model):
     time = models.DateTimeField()  # 可以直接使用datetime对象
+    duration = models.DurationField(default=timedelta(1))
 
     def __str__(self):
         return "id:%d, time: %s" % (self.id or 0, self.time)

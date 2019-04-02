@@ -29,10 +29,22 @@ class MySerializerTestCase(TestCase):
         pass
 
     def test_datetime(self):
-        info("准备测试datetime field")
-        data = {'time': timezone.now()}
-        serializers.DateTimeModelSerializer(data=data).is_valid(raise_exception=True)
-        info("可以直接使用datetime对象")
+        head1("\n## 测试DateTimeFeidl")
+        list1("* 准备测试datetime field")
+        data = {'time': timezone.now(), 'duration': 3600.1}
+        serializer = serializers.DateTimeModelSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        info("datetime的对象可以直接当作data传进去")
+        list1("* 准备测试duration field")
+        info("duration可以直接传入一个小数，代表多少秒")
+        serializer.save()
+        info(serializer.data)
+        data = {'time': timezone.now(), 'duration': "11 001:2:3.5"}
+        serializer2 = serializers.DateTimeModelSerializer(data=data)
+        serializer2.is_valid(raise_exception=True)
+        serializer2.save()
+        info("也可以传入符合格式的字符串(前面多写或者少写几个0没关系")
+        info(serializer2.data)
 
     def test_hidden(self):
         out.write(style.HTTP_INFO("准备测试hiddenfield"))

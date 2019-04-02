@@ -317,7 +317,7 @@ class DateTimeModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.DateTimeModel
-        fields = ["time"]
+        fields = ["time", "duration"]
 
 
 class TestUniqueSerializer(serializers.ModelSerializer):

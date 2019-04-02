@@ -5,35 +5,21 @@
 import ipdb
 import sys
 import datetime
+from datetime import timedelta
 import pytz
 
 from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 
 from django.test import TestCase
-from testapp.models import DateTimeModel, Student, Teacher
 from testapp import models
+from testapp.models import DateTimeModel, Student, Teacher
+from testapp import models, head, head1, list1, list2, info
 from django.utils import timezone
 
 
 out = OutputWrapper(sys.stdout)
 style = color_style()
-
-
-def head(text):
-    out.write(style.SQL_TABLE(text))
-
-def head1(text):
-    out.write(style.MIGRATE_HEADING(text))
-
-def list1(text):
-    out.write(style.SQL_FIELD(text))
-
-def list2(text):
-    out.write(style.SQL_COLTYPE(text))
-
-def info(text):
-    out.write(style.HTTP_INFO(text))
 
 
 head("# 准备测试Field")
@@ -87,3 +73,10 @@ class FieldTestCase(TestCase):
         print("add以后现在new_student的friends里面有没有George", student in new_student.friends.all())
         print("但是add的return: ", result)
         head1("ManyToManyField测试完毕")
+
+    def test_datetime_field(self):
+        head1("\n## 测试和时间有关的Field")
+        list1("* 测试DurationField")
+        datetime_obj = models.DateTimeModel.objects.create(
+            time=timezone.now())
+        info(isinstance(datetime_obj.duration, timedelta))
