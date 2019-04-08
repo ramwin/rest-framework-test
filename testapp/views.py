@@ -146,6 +146,7 @@ class TestFilterViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         log.info("调用TestFilterViewSet.create")
+        log.info(f"当前动作{self.action}")
         return Response({"detail":"不能调用哦"}, status=409)
         response = super(TestFilterViewSet, self).create(request, *args, **kwargs)
         return response

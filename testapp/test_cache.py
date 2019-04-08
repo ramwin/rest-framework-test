@@ -11,6 +11,9 @@ from testapp import head, head1, list1, list2, info
 from testapp import service
 
 
+head("# 准备测试缓存")
+
+
 class CacheTestCase(TestCase):
 
     def setUp(self):

@@ -16,7 +16,7 @@ head("# 准备测试template")
 class TemplateTestCase(TestCase):
 
     def test_template(self):
-        head1("\n# 准备模板")
+        head1("\n## 测试模板")
         list1("* 测试不同的url,的参数的传递")
         client = Client()
         info("通过request.resolver_match.kwargs可以获取到url里面额外的参数")
