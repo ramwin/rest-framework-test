@@ -160,3 +160,14 @@ class URLView(TemplateView):
             return ["testapp/测试模板_admin.html"]
         else:
             return [self.template_name]
+
+
+class TestPathView(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        log.info("测试url路径")
+        log.info(kwargs)
+        return render(
+            request, "testapp/测试模板.html",
+            kwargs
+        )

@@ -9,6 +9,9 @@ from django.test import TestCase
 from testapp import head, head1, list1, list2, info
 
 
+head("# 准备测试viewset")
+
+
 class ViewSetFilter(TestCase):
 
     def test_viewset_post(self):

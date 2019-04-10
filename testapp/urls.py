@@ -4,6 +4,7 @@
 
 
 from django.conf.urls import url
+from django.urls import path
 from . import views
 from rest_framework import routers
 
@@ -26,4 +27,5 @@ urlpatterns = router.urls + [
         {"scene": "normal"}, name="url"),
     url(r'^url2/', views.URLView.as_view(),
         {"scene": "admin"}, name="url"),
+    path('testint/<int:pk>/', views.TestPathView.as_view(), name="testint"),
 ]
