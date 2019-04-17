@@ -28,4 +28,5 @@ urlpatterns = router.urls + [
     url(r'^url2/', views.URLView.as_view(),
         {"scene": "admin"}, name="url"),
     path('testint/<int:pk>/', views.TestPathView.as_view(), name="testint"),
+    path('template/', views.TemplateTestView.as_view(), name="template"),
 ]

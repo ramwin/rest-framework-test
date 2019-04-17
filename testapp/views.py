@@ -171,3 +171,7 @@ class TestPathView(TemplateView):
             request, "testapp/测试模板.html",
             kwargs
         )
+
+
+class TemplateTestView(TemplateView):
+    template_name = "testapp/测试模板.html"

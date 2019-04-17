@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load ramwin_extras %}
 <html>
   <head>
     <title></title>
@@ -6,5 +7,20 @@
   </head>
   <body>
     <h1>测试模板</h1>
+    <h2>simple tags</h2>
+      因为每次都会调用函数，所以下面两次渲染出来的时间不一样哦<br>
+      当前时间: {% current_time '%Y-%m-%d %H:%M:%S.%f' %}<br>
+      当前时间: {% current_time '%Y-%m-%d %H:%M:%S.%f' %}
+    <h2> 测试uuid的生成</h2>
+      {% with uuid=uuid_gen %}
+        这里的三个uuid应该是一样的
+        <p>{{uuid}}</p>
+        <p>{{uuid}}</p>
+        <p>{{uuid}}</p>
+      {% endwith %}
+      <p>这里的就不一样了</p>
+        <p>{% uuid_gen %}</p>
+        <p>{% uuid_gen %}</p>
+        <p>{% uuid_gen %}</p>
   </body>
 </html>
