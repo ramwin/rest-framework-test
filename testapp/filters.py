@@ -56,3 +56,16 @@ class TestFilterClass3(django_filters.rest_framework.FilterSet):
     class Meta:
         model = models.TestFilter
         fields = ["_type", "basic_model"]
+
+
+class TestOrderFilter(django_filters.rest_framework.FilterSet):
+    order_by = django_filters.OrderingFilter(
+        fields = (
+            ("id", "按照id大小排序"),
+            ("text", "按照text大小排序"),
+        )
+    )
+
+    class Meta:
+        fields = ["text", "id", "order_by"]
+        model = models.BasicModel

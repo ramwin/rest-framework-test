@@ -14,9 +14,10 @@ from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView,
     ListAPIView,
 )
+from rest_framework.pagination import PageNumberPagination, CursorPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from . import models, serializers, filters
+from . import models, serializers, filters, paginations
 from rest_framework.response import Response
 
 # Create your views here.
@@ -175,3 +176,12 @@ class TestPathView(TemplateView):
 
 class TemplateTestView(TemplateView):
     template_name = "testapp/测试模板.html"
+
+
+class TestViewSet(ModelViewSet):
+    queryset = models.BasicModel.objects.all()
+    serializer_class = serializers.BasicModelSerializer
+    # filter_fields = ["text", "ordering"]
+    # filterset_fields = ["text"]
+    filter_class = filters.TestOrderFilter
+    pagination_class = CursorPagination

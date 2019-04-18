@@ -12,6 +12,7 @@ from rest_framework import routers
 app_name = "testapp"
 router = routers.SimpleRouter()
 router.register(r'testfilter', views.TestFilterViewSet)
+router.register(r'modelviewset', views.TestViewSet)
 
 urlpatterns = router.urls + [
     url('^basicmodel/$', views.BasicModelView.as_view()),
