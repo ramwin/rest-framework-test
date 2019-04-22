@@ -16,3 +16,8 @@ def current_time(format_string):
 @register.simple_tag
 def uuid_gen():
     return uuid.uuid4().hex
+
+
+@register.filter(name='useruuid')
+def useruuid(user):
+    return uuid.uuid4().hex

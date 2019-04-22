@@ -12,7 +12,7 @@
       当前时间: {% current_time '%Y-%m-%d %H:%M:%S.%f' %}<br>
       当前时间: {% current_time '%Y-%m-%d %H:%M:%S.%f' %}
     <h2> 测试uuid的生成</h2>
-      {% with uuid=uuid_gen %}
+      {% with uuid=request.user|useruuid %}
         这里的三个uuid应该是一样的
         <p>{{uuid}}</p>
         <p>{{uuid}}</p>
@@ -22,5 +22,16 @@
         <p>{% uuid_gen %}</p>
         <p>{% uuid_gen %}</p>
         <p>{% uuid_gen %}</p>
+      <p>使用templatetag生成一样的uuid</p>
+      {% uuid_gen as uuid%}
+        这里的三个uuid应该是一样的
+        <p>{{uuid}}</p>
+        <p>{{uuid}}</p>
+        <p>{{uuid}}</p>
+      {% uuid_gen as uuid%}
+        这里的三个uuid应该是一样的
+        <p>{{uuid}}</p>
+        <p>{{uuid}}</p>
+        <p>{{uuid}}</p>
   </body>
 </html>
