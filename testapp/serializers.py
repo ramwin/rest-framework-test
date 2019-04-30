@@ -314,6 +314,8 @@ class TestSourceSerializer(serializers.ModelSerializer):
 
 
 class DateTimeModelSerializer(serializers.ModelSerializer):
+    time = serializers.DateTimeField(
+        input_formats=["iso-8601", "%Y-%m-%d", "%Y年%m月%d日"])
 
     class Meta:
         model = models.DateTimeModel

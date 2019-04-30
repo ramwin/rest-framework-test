@@ -29,12 +29,29 @@ class MySerializerTestCase(TestCase):
         pass
 
     def test_datetime(self):
-        head1("\n## 测试DateTimeFeidl")
+        head1("\n## 测试DateTimeField")
         list1("* 准备测试datetime field")
         data = {'time': timezone.now(), 'duration': 3600.1}
         serializer = serializers.DateTimeModelSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         info("datetime的对象可以直接当作data传进去")
+
+        data = {'time': timezone.now().isoformat(), 'duration': 3600.1}
+        serializer = serializers.DateTimeModelSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        info("datetime的国际化时间可以直接传进去")
+
+        list1("* 准备测试input_formats")
+        data = {"time": "2019-01-01", "duration": 3600.1}
+        serializer = serializers.DateTimeModelSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        info(serializer.validated_data)
+        data = {"time": "2019年1月1日", "duration": 3600.1}
+        serializer = serializers.DateTimeModelSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        info(serializer.validated_data)
+        info("可以输入日期格式, 会自动变成local的00点00分00秒")
+
         list1("* 准备测试duration field")
         info("duration可以直接传入一个小数，代表多少秒")
         serializer.save()
