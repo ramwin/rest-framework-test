@@ -197,11 +197,16 @@ LOGGING = {
         },
     },
     'loggers': {
+        'default': {
+            'handlers': ['debug_file', 'info_file',
+                         'warning_file', 'error_file', 'console'],
+            'level': "INFO",
+        },
         'django': {
             'handlers': ['debug_file', 'info_file',
                          'warning_file', 'error_file', 'console'],
             'level': "INFO",
-        }
+        },
     },
 }
 ASGI_APPLICATION = "rest_framework_test.routing.application"

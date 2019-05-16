@@ -17,7 +17,7 @@ from rest_framework.generics import (
 from rest_framework.pagination import PageNumberPagination, CursorPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from . import models, serializers, filters, paginations
+from . import models, serializers, filters, paginations, permissions
 from rest_framework.response import Response
 
 # Create your views here.
@@ -59,8 +59,8 @@ class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
     filter_fields = ['text']
 
     def finalize_response(self, request, response, *args, **kwargs):
-        import ipdb
-        ipdb.set_trace()
+        # import ipdb
+        # ipdb.set_trace()
         response = super(BasicModelDetailView, self).finalize_response(request, response, *args, **kwargs)
         return response
 
@@ -185,3 +185,4 @@ class TestViewSet(ModelViewSet):
     # filterset_fields = ["text"]
     filter_class = filters.TestOrderFilter
     pagination_class = CursorPagination
+    permission_classes = [permissions.TestPermission]

@@ -21,12 +21,14 @@ from django.contrib import admin
 from rest_framework.documentation import include_docs_urls
 from rest_framework_swagger.views import get_swagger_view
 
-urlpatterns = [
+urlpatterns1 = [
+    url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
+]
+urlpatterns = urlpatterns1 + [
     url(r'^admin/', admin.site.urls),
     # url(r'^docs/', include_docs_urls(title='My API title')),
-    url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
     url(r'^report_builder/', include('report_builder.urls')),
-    url(r'swagger/', get_swagger_view(title="文档")),
+    url(r'swagger/', get_swagger_view(title="文档", patterns=urlpatterns1)),
     url(r'^wsapp/chat/', include('chat.urls')),
     # path("testapp/", include("testapp.urls", namespace="testapp_namespace")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
