@@ -13,6 +13,7 @@ app_name = "testapp"
 router = routers.SimpleRouter()
 router.register(r'testfilter', views.TestFilterViewSet)
 router.register(r'modelviewset', views.TestViewSet)
+router.register(r'log', views.TestLogViewSet)
 
 urlpatterns = router.urls + [
     url('^basicmodel/$', views.BasicModelView.as_view()),

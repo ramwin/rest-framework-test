@@ -136,8 +136,8 @@ class MySerializerTestCase(TestCase):
         print("嵌套的测试完毕")
 
     def test_method(self):
-        return
-        out.write(style.HTTP_INFO("准备测试method里面的数据"))
+        head1("## 准备测试method里面的数据")
+        list1("* 测试如果SerializerMethodField不返回数据会怎么样")
         data = {
             "text": 'text'
         }
@@ -146,6 +146,7 @@ class MySerializerTestCase(TestCase):
         s.save()
         out.write(style.HTTP_INFO(s.data))
         out.write(style.ERROR(s.errors))
+        return
 
     def test_validated_data(self):
         return

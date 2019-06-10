@@ -194,11 +194,15 @@ class TestRegexSerializer(serializers.Serializer):
 
 
 class TestMethodSerializer(serializers.ModelSerializer):
+    test_method = serializers.SerializerMethodField()
 
     class Meta:
         model = models.TestMethodModel
         # fields = "__all__"  # 不会有get_num
-        fields = ["text", "get_num", "id"]
+        fields = ["text", "get_num", "id", "test_method"]
+
+    def get_test_method(self, obj):
+        pass
 
 
 class TestMetaSerializer(serializers.ModelSerializer):

@@ -33,5 +33,25 @@
         <p>{{uuid}}</p>
         <p>{{uuid}}</p>
         <p>{{uuid}}</p>
+    <script>
+      console.info('{{string}}')
+      console.info('{{quote}}')
+      // console.info('{{savequote|safe}}')
+      console.info('{{json}}')
+      console.info({{json|safe}})
+      console.info({{dict_json_safe|safe}})
+    </script>
+    <script>
+      // 使用autoescape
+      {% autoescape off %}
+      console.info('{{string}}')
+      // console.info('{{quote}}')  直接放入'报错
+      // console.info('{{savequote|safe}}')  直接放入'报错
+      // console.info('{{json}}')  放入了json，但是json里面有'
+      console.info({{json}})
+      console.info({{json|safe}})
+      console.info({{dict_json_safe|safe}})
+      {% endautoescape %}
+    </script>
   </body>
 </html>

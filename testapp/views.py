@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import logging
 import ipdb
 import json
 import tempfile
 
-from django.http import FileResponse, HttpResponse, StreamingHttpResponse
+from django.http import FileResponse, HttpResponse, StreamingHttpResponse, Http404
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
@@ -23,6 +21,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 log = logging.getLogger('django')
+log = logging.getLogger(__name__)
 
 
 class BasicModelView(ListCreateAPIView):
@@ -177,6 +176,22 @@ class TestPathView(TemplateView):
 class TemplateTestView(TemplateView):
     template_name = "testapp/测试模板.html"
 
+    def get_context_data(self):
+        return {
+            "string": "字符串",
+            "quote": "'",  # 默认变成 &#39;
+            "savequote": "'",  # 这个会直接变成'导致报错
+            "json": json.dumps("'"),  # 这个会变成&quot;&#39;&quot;不能直接用
+            "jsonsafe": json.dumps('"'),  # 后端用jsondump，前端直接用jsonparse
+            "dict_json_safe": json.dumps({
+                "bool": True,
+                "list": [1, 2, 3, "1", "2", "3", None, False],
+                "dict": {
+                    "bool": True,
+                },
+            })
+        }
+
 
 class TestViewSet(ModelViewSet):
     queryset = models.BasicModel.objects.all()
@@ -186,3 +201,29 @@ class TestViewSet(ModelViewSet):
     filter_class = filters.TestOrderFilter
     pagination_class = CursorPagination
     permission_classes = [permissions.TestPermission]
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+        except Http404:
+            log.info("没有找到")
+            # raise e
+            response = Response({"detail": "Not found."}, status=404)
+            response._has_been_logger = True
+            return response
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+
+class TestLogViewSet(ModelViewSet):
+    queryset = models.BasicModel.objects.all()
+    serializer_class = serializers.BasicModelSerializer
+    pagination_class = CursorPagination
+
+    def list(self, request, *args, **kwargs):
+        log.warning("warning日志")
+        log.info("info日志")
+        log.info(__name__)
+        logging.info("用logging直接info")
+        logging.warning("用logging直接warning")
+        return super(TestLogViewSet, self).list(request, *args, **kwargs)
