@@ -39,5 +39,5 @@ class ViewSetFilter(TestCase):
         obj = models.BasicModel.objects.create(text="类型1")
         res = apiclient.get(
             "/testapp/modelviewset/{}/".format(obj.id), format="json")
-        import ipdb
-        ipdb.set_trace()
+        # import ipdb
+        # ipdb.set_trace()

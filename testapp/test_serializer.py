@@ -4,7 +4,6 @@
 
 # 这里用来测试rest_framework的serializer
 
-
 import json
 import time
 import sys
@@ -13,10 +12,9 @@ from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 from django.test import TestCase
 from django.utils import timezone
-from testapp import head, head1, list1, list2, info
+from testapp import head, head1, list1, list2, info, success
 from .models import *
 from . import serializers
-
 
 out = OutputWrapper(sys.stdout)
 style = color_style()
@@ -24,7 +22,6 @@ head("# 测试rest-framework的Serializer")
 
 
 class MySerializerTestCase(TestCase):
-
     def setUp(self):
         pass
 
@@ -71,28 +68,42 @@ class MySerializerTestCase(TestCase):
         out.write(style.HTTP_INFO("测试完毕"))
 
     def test_many(self):
-        print("准备测试多对多")
-        a = serializers.ManySerializer(data={'texts': ['1','2','3']})
+        head1("准备测试多对多")
+        a = serializers.ManySerializer(data={'texts': ['1', '2', '3']})
         a.is_valid(raise_exception=True)
         # a.save(texts=[])
         a.save()
-        print("保存成功")
+        success("保存成功")
         BasicModel.objects.create(text='text')
         a.instance.texts.add(*BasicModel.objects.all())
         # print(serializers.ManyDetailSerializer(a.instance).data)
 
     def test_null(self):
-        # print("不测试null")
-        # return
         head1("## 测试Null")
         data_list = [
             {},
-            {"can": ""},
-            {"can": "can"}, # 有null为null，有blank为""
-            {"can": "can", "can_null": None},
-            {"can": "can", "can_null": ""},
-            {"can": "can", "can_blank": None},
-            {"can": "can", "can_default": ""},
+            {
+                "can": ""
+            },
+            {
+                "can": "can"
+            },  # 有null为null，有blank为""
+            {
+                "can": "can",
+                "can_null": None
+            },
+            {
+                "can": "can",
+                "can_null": ""
+            },
+            {
+                "can": "can",
+                "can_blank": None
+            },
+            {
+                "can": "can",
+                "can_default": ""
+            },
         ]
         for data in data_list:
             serializer = serializers.TestNullSerializer(data=data)
@@ -104,7 +115,7 @@ class MySerializerTestCase(TestCase):
                 out.write(style.ERROR(serializer.errors))
 
     def test_serializer(self):
-        return 
+        return
         print("准备测试")
         a = serializers.MySerializer(data={'field': 2})
         a.is_valid(raise_exception=True)
@@ -123,13 +134,19 @@ class MySerializerTestCase(TestCase):
         text2 = BasicModel.objects.create(text='text2')
         mm = ManyModel.objects.create()
         mm.texts.add(text1, text2)
-        out.write(style.MIGRATE_HEADING(json.dumps(serializers.ManyDetail2Serializer(mm).data, indent=4)))
+        out.write(
+            style.MIGRATE_HEADING(
+                json.dumps(serializers.ManyDetail2Serializer(mm).data,
+                           indent=4)))
 
     def test_many_true(self):
         print("准备测试嵌套的序列化类")
-        a = serializers.ForeignKeySerializer(data={"text": [
-            {"text":"text1"}, {"text": "text2"}
-        ]})
+        a = serializers.ForeignKeySerializer(
+            data={"text": [{
+                "text": "text1"
+            }, {
+                "text": "text2"
+            }]})
         a.is_valid(raise_exception=True)
         a.save()
         print(a.data)
@@ -138,9 +155,7 @@ class MySerializerTestCase(TestCase):
     def test_method(self):
         head1("## 准备测试method里面的数据")
         list1("* 测试如果SerializerMethodField不返回数据会怎么样")
-        data = {
-            "text": 'text'
-        }
+        data = {"text": 'text'}
         s = serializers.TestMethodSerializer(data=data)
         s.is_valid()
         s.save()
@@ -152,9 +167,7 @@ class MySerializerTestCase(TestCase):
         return
         out.write(style.HTTP_INFO("准备测试validated_data里面的数据"))
         text = BasicModel.objects.create(text='123')
-        data = {
-            "text": text.id
-        }
+        data = {"text": text.id}
         s = serializers.ForeignKey2Serializer(data=data)
         s.is_valid()
         out.write(style.HTTP_INFO(s.validated_data))
@@ -164,9 +177,15 @@ class MySerializerTestCase(TestCase):
         print("测试正则表达式的serializer")
         data_list = [
             {},
-            {"avatar": ""},
-            {"avatar": None},
-            {"avatar": "tmp-group-123"},
+            {
+                "avatar": ""
+            },
+            {
+                "avatar": None
+            },
+            {
+                "avatar": "tmp-group-123"
+            },
         ]
         for data in data_list:
             serializer = serializers.TestRegexSerializer(data=data)
@@ -179,9 +198,15 @@ class MySerializerTestCase(TestCase):
     def test_validation(self):
         out.write(style.HTTP_INFO("准备测试自己的validation"))
         data_list = [
-            {"status": "0"},
-            {"status": "1"},
-            {"status": "2"},
+            {
+                "status": "0"
+            },
+            {
+                "status": "1"
+            },
+            {
+                "status": "2"
+            },
         ]
         for data in data_list:
             serializer = serializers.TestValidateSerializer(data=data)
@@ -206,8 +231,8 @@ class MySerializerTestCase(TestCase):
         out.write(style.MIGRATE_HEADING("测试to_representation结束"))
 
     def test_property(self):
-        out.write(style.HTTP_INFO("准备测试property的序列化"))
-        out.write(style.HTTP_INFO("测试用pro"))
+        head1("准备测试property的序列化")
+        info("测试用pro")
         data = {}
         serializer1 = serializers.TestPropertySerializer(data=data)
         serializer1.is_valid()
@@ -243,12 +268,38 @@ class MySerializerTestCase(TestCase):
 
         class ExtraSerializer(serializers.ModelSerializer):
             text = serializers.CharField()  # 不行，如果定义了，Meta里面必须有
+
             class Meta:
                 model = BasicModel
                 fields = ["id"]
 
         basic_model = BasicModel.objects.first()
         info(ExtraSerializer(basic_model).data)
+
+    def test_extra2(self):
+        head1("## 测试如果meta里面多了不是model的字段怎么办")
+        info("当前的text数量: {}".format(BasicModel.objects.count()))
+        instance = BasicModel.objects.create()
+        serializer = serializers.TestExtraFieldSerializer(instance,
+                                                          data={
+                                                              "text": "text",
+                                                              "num": 123
+                                                          })
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        info(serializer.data)  # 会直接返回num
+        info("现在的text数量: {}".format(BasicModel.objects.count()))
+        head1("## 那么如果覆盖了save函数怎么办")
+        info("会报错，因为save已经被覆盖了，所以之后调用save()会报错")
+        serializer = serializers.TestOverWriteSaveSerializer(
+            instance, data={
+                "text": "text_oversave",
+                "num": 123,
+                "save": 343
+            })
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        info(serializer.data)
 
     def test_id(self):
         head("准备测试id这个field")

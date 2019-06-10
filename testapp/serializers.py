@@ -358,3 +358,20 @@ class TestFilterSerializer2(serializers.ModelSerializer):
     class Meta:
         model = models.TestFilter
         fields = ["_type", "id", "basic_model"]
+
+
+class TestExtraFieldSerializer(serializers.ModelSerializer):
+    num = serializers.IntegerField()
+
+    class Meta:
+        model = models.BasicModel
+        fields = ["id", "text", "num"]
+
+
+class TestOverWriteSaveSerializer(serializers.ModelSerializer):
+    num = serializers.IntegerField()
+    save = serializers.IntegerField()
+
+    class Meta:
+        model = models.BasicModel
+        fields = ["id", "text", "num", "save"]

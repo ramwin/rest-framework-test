@@ -22,3 +22,6 @@ def list2(text):
 
 def info(text):
     out.write(style.HTTP_INFO(text))
+
+def success(text):
+    out.write(style.SUCCESS(text))
