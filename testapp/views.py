@@ -9,7 +9,9 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    CreateAPIView,
     ListAPIView,
 )
 from rest_framework.pagination import PageNumberPagination, CursorPagination
@@ -60,7 +62,9 @@ class BasicModelDetailView(RetrieveUpdateDestroyAPIView):
     def finalize_response(self, request, response, *args, **kwargs):
         # import ipdb
         # ipdb.set_trace()
-        response = super(BasicModelDetailView, self).finalize_response(request, response, *args, **kwargs)
+        response = super(BasicModelDetailView,
+                         self).finalize_response(request, response, *args,
+                                                 **kwargs)
         return response
 
     def destroy(self, request, *args, **kwargs):
@@ -84,7 +88,6 @@ class PartialModelPatchView(RetrieveUpdateDestroyAPIView):
 
 
 class FileReturnView(APIView):
-
     def get(self, request, *args, **kwargs):
         if request._request.path.endswith("download/"):
             return render(request, "testapp/返回文件.html", {})
@@ -98,11 +101,9 @@ class FileReturnView(APIView):
 
         # 直接返回文档和数据，但是这样名字是根据后缀名来的，不是根据下面的filename来的
         print("直接返回文档")
-        response = HttpResponse(
-            "ok", content_type="text/csv")
+        response = HttpResponse("ok", content_type="text/csv")
         response["Content-Disposition"] = "attachment:filename=\"{}\"".format(
-            "test.csv"
-        )
+            "test.csv")
         return response
 
 
@@ -121,11 +122,17 @@ class ManyCreateView(CreateAPIView):
         data = request.data.copy()
         data["texts"] = json.loads(data["texts"])
         log.info(data)
-        data = { 
+        data = {
             "texts": [
-                {"text": "text"},
-                {"text": "text"},
-                {"text": "text"},
+                {
+                    "text": "text"
+                },
+                {
+                    "text": "text"
+                },
+                {
+                    "text": "text"
+                },
             ]
         }
         serializer = self.serializer_class(data=data)
@@ -147,8 +154,9 @@ class TestFilterViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         log.info("调用TestFilterViewSet.create")
         log.info(f"当前动作{self.action}")
-        return Response({"detail":"不能调用哦"}, status=409)
-        response = super(TestFilterViewSet, self).create(request, *args, **kwargs)
+        return Response({"detail": "不能调用哦"}, status=409)
+        response = super(TestFilterViewSet,
+                         self).create(request, *args, **kwargs)
         return response
 
 
@@ -163,14 +171,10 @@ class URLView(TemplateView):
 
 
 class TestPathView(TemplateView):
-
     def get(self, request, *args, **kwargs):
         log.info("测试url路径")
         log.info(kwargs)
-        return render(
-            request, "testapp/测试模板.html",
-            kwargs
-        )
+        return render(request, "testapp/测试模板.html", kwargs)
 
 
 class TemplateTestView(TemplateView):
@@ -178,12 +182,18 @@ class TemplateTestView(TemplateView):
 
     def get_context_data(self):
         return {
-            "string": "字符串",
-            "quote": "'",  # 默认变成 &#39;
-            "savequote": "'",  # 这个会直接变成'导致报错
-            "json": json.dumps("'"),  # 这个会变成&quot;&#39;&quot;不能直接用
-            "jsonsafe": json.dumps('"'),  # 后端用jsondump，前端直接用jsonparse
-            "dict_json_safe": json.dumps({
+            "string":
+            "字符串",
+            "quote":
+            "'",  # 默认变成 &#39;
+            "savequote":
+            "'",  # 这个会直接变成'导致报错
+            "json":
+            json.dumps("'"),  # 这个会变成&quot;&#39;&quot;不能直接用
+            "jsonsafe":
+            json.dumps('"'),  # 后端用jsondump，前端直接用jsonparse
+            "dict_json_safe":
+            json.dumps({
                 "bool": True,
                 "list": [1, 2, 3, "1", "2", "3", None, False],
                 "dict": {
