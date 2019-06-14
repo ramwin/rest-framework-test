@@ -5,11 +5,18 @@
 
 # chat/consumers.py
 # chat/consumers.py
+import logging
+from channels.layers import get_channel_layer
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 
+
+log = logging.getLogger("default")
+
+
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        log.info("有人链接了{}".format(self.channel_name))
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
@@ -20,10 +27,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         await self.accept()
+        channel_layer = get_channel_layer()
+        await channel_layer.send(  # 可以直接给某个channel_name发送消息
+            self.channel_name, {"type": "chat.message", "message": "Hello there!"})
 
     async def disconnect(self, close_code):
         # Leave room group
-        print("用户关闭了链接: code: {}".format(close_code))  # 如果用户close的时候没有输入code, 这里就是None
+        log.info("用户关闭了链接: code: {}".format(close_code))  # 如果用户close的时候没有输入code, 这里就是None
+        log.info("关闭链接")
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
