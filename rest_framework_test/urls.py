@@ -29,6 +29,6 @@ urlpatterns = urlpatterns1 + [
     # url(r'^docs/', include_docs_urls(title='My API title')),
     url(r'^report_builder/', include('report_builder.urls')),
     url(r'swagger/', get_swagger_view(title="文档", patterns=urlpatterns1)),
-    url(r'^wsapp/chat/', include('chat.urls')),
+    url(r'^wsapp/chat/', include('chat.urls', namespace="chat")),
     # path("testapp/", include("testapp.urls", namespace="testapp_namespace")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
