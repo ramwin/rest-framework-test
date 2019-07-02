@@ -4,6 +4,8 @@ import ipdb
 import json
 import tempfile
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import FileResponse, HttpResponse, StreamingHttpResponse, Http404
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
@@ -26,7 +28,7 @@ log = logging.getLogger('django')
 log = logging.getLogger(__name__)
 
 
-class BasicModelView(ListCreateAPIView):
+class BasicModelView(LoginRequiredMixin, ListCreateAPIView):
     """
     get:
     返回Text列表
@@ -36,12 +38,12 @@ class BasicModelView(ListCreateAPIView):
     """
     queryset = models.BasicModel.objects.all()
     serializer_class = serializers.BasicModelSerializer
+    pagination_class = paginations.PaginationClass
+    template_name = "testapp/basicmodel.html"
     filter_fields = ['text']
-    http_method_names = ['post']
+    http_method_names = ['post', 'get']
 
     def get_serializer(self, *args, **kwargs):
-        # import ipdb
-        # ipdb.set_trace()
         if 'data' in kwargs:
             data = kwargs['data']
             # data['text'] = 'new text'

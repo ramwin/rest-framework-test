@@ -8,6 +8,7 @@
 import logging
 from channels.layers import get_channel_layer
 from channels.generic.websocket import AsyncWebsocketConsumer
+from . import service
 import json
 
 
@@ -21,6 +22,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_group_name = 'chat_%s' % self.room_name
 
         # Join room group
+        log.info("加入group")
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -28,8 +30,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
         channel_layer = get_channel_layer()
+        log.info("发送消息")
         await channel_layer.send(  # 可以直接给某个channel_name发送消息
             self.channel_name, {"type": "chat.message", "message": "Hello there!"})
+        log.info("触发回调")
+        signal = service.MySignal()
+        await signal.onconnect(self.room_group_name)
 
     async def disconnect(self, close_code):
         # Leave room group
