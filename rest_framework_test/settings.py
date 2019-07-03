@@ -150,6 +150,7 @@ REST_FRAMEWORK = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'level': 10,
     'formatters': {
         'verbose': {
             'format': ('[%(levelname)5s] %(asctime)s %(pathname)s '
@@ -158,6 +159,9 @@ LOGGING = {
         },
         'simple': {
             'format': '[%(levelname)s] %(message)s ',
+        },
+        'default': {
+            'format': '[%(levelname)s] %(asctime)s %(message)s ',
         },
     },
     'handlers': {
@@ -195,6 +199,11 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
+        'memory_handler': {
+            'class': 'logging.handlers.MemoryHandler',
+            'capacity': 10,
+            'target': 'info_file',
+        },
     },
     'loggers': {
         'default': {
@@ -206,6 +215,19 @@ LOGGING = {
             'handlers': ['debug_file', 'info_file',
                          'warning_file', 'error_file', 'console'],
             'level': "INFO",
+        },
+        'testapp': {
+            'handlers': ['debug_file', 'info_file',
+                         'warning_file', 'error_file', 'console'],
+            'level': "INFO",
+        },
+        'memory': {
+            "handlers": ["memory_handler",],
+            'level': "INFO",
+        },
+        'nothing': {
+            "handlers": [],
+            "level": "INFO",
         },
     },
 }

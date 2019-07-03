@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import logging
+from logging import handlers
 import ipdb
 import json
 import tempfile
+import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,8 +26,10 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-log = logging.getLogger('django')
+# log = logging.getLogger('django')
 log = logging.getLogger(__name__)
+log.info("载入了testapp")
+log.info(log.handlers)
 
 
 class BasicModelView(LoginRequiredMixin, ListCreateAPIView):
@@ -233,9 +237,16 @@ class TestLogViewSet(ModelViewSet):
     pagination_class = CursorPagination
 
     def list(self, request, *args, **kwargs):
-        log.warning("warning日志")
-        log.info("info日志")
-        log.info(__name__)
-        logging.info("用logging直接info")
-        logging.warning("用logging直接warning")
+        target = log.handlers
+        log.info("测试log")
+        print("当前handlers")
+        print(target)
+        memory_handler = handlers.MemoryHandler(
+            capacity=1, flushLevel=logging.WARNING, target=target)
+        innerlog = logging.getLogger("nothing")
+        innerlog.addHandler(memory_handler)
+        innerlog.warning("warning日志")
+        innerlog.info("info日志")
+        innerlog.info(__name__)
+        print(innerlog.handlers)
         return super(TestLogViewSet, self).list(request, *args, **kwargs)
