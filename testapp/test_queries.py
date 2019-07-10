@@ -10,6 +10,7 @@ from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
 
 from django.db.models import F
+from testapp import head, head1, list1, list2, info
 from django.test import TestCase
 from testapp.models import DateTimeModel, PartialModel, BasicModel, \
     TestMethodTriggerModel
@@ -29,6 +30,7 @@ class ColorfulLog(object):
 
 
 log = ColorfulLog()
+head("# 准备测试queryset")
 
 
 class DateTimeTestCase(TestCase):
@@ -38,23 +40,24 @@ class DateTimeTestCase(TestCase):
         self.test_date_list = [
             "2018-05-20T23:59:59+08:00",  # 2018-05-20T15:59:59+00:00"
             "2018-05-21T00:00:00+08:00",  # 2018-05-20T16:00:00+00:00"
-            "2018-05-21T23:59:59+08:00",  #
+            "2018-05-21T23:59:59+08:00",  # 2018-05-21T15:59:59+00:00
             "2018-05-22T00:00:00+08:00",
+            "2018-05-22T00:00:00+00:00",
         ]
         for date in self.test_date_list:
-            out.write(style.HTTP_INFO(date))
-        for date in self.test_date_list:
-            DateTimeModel.objects.create(time=date)
+            datetime_obj = DateTimeModel.objects.create(time=date)
+            info("时间: {}".format(datetime_obj.time))
 
     def test_datetimefield_filter_date(self):
+        head1("## 准备测试通过`_date`来过滤时间")
+        list1("* 普通时间过滤")
         queryset = DateTimeModel.objects.filter(time__date="2018-05-21")
-        out.write(style.HTTP_SERVER_ERROR("普通时间过滤"))
         for instance in queryset:
             out.write(style.WARNING(instance.time))
-        new_date = timezone.now() + timezone.timedelta(0, 12*3600)
-        print(new_date)
+        new_date = timezone.now() - timezone.timedelta(0, 12*3600)
+        info(new_date)
         queryset2 = DateTimeModel.objects.filter(time__date=new_date.date())
-        out.write(style.HTTP_SERVER_ERROR("utc时间过滤"))
+        list2("* utc时间过滤")
         for instance in queryset2:
             out.write(style.WARNING(instance.time))
 

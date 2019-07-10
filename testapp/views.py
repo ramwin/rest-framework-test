@@ -28,8 +28,6 @@ from rest_framework.response import Response
 
 # log = logging.getLogger('django')
 log = logging.getLogger(__name__)
-log.info("载入了testapp")
-log.info(log.handlers)
 
 
 class BasicModelView(LoginRequiredMixin, ListCreateAPIView):

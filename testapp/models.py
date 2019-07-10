@@ -67,6 +67,10 @@ class GetOrCreateModel(models.Model):
     def __str__(self):
         return "GetOrCreate: Id:{}".format(self.id)
 
+    def save(self, *args, **kwargs):
+        print("准备进入super")
+        return super(GetOrCreateModel, self).save(*args, **kwargs)
+
 
 def myfunction():
     print("调用myfunction")
@@ -222,3 +226,8 @@ class TestAdminPermissionModel(models.Model):
 
     class Meta:
         verbose_name_plural = "测试admin的权限"
+
+
+class TestAutoNow(models.Model):
+    createtime = models.DateTimeField(auto_now_add=True)
+    updatetime = models.DateTimeField(auto_now=True)
