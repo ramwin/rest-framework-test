@@ -231,3 +231,10 @@ class TestAdminPermissionModel(models.Model):
 class TestAutoNow(models.Model):
     createtime = models.DateTimeField(auto_now_add=True)
     updatetime = models.DateTimeField(auto_now=True)
+
+
+class DateTimeOrder(models.Model):
+    time = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return "{}".format(self.time)

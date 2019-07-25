@@ -36,30 +36,44 @@ head("# 准备测试queryset")
 class DateTimeTestCase(TestCase):
 
     def setUp(self):
-        out.write(style.MIGRATE_HEADING("准备测试时间的过滤"))
+        head1("## 准备测试时间的过滤和排序")
         self.test_date_list = [
             "2018-05-20T23:59:59+08:00",  # 2018-05-20T15:59:59+00:00"
             "2018-05-21T00:00:00+08:00",  # 2018-05-20T16:00:00+00:00"
             "2018-05-21T23:59:59+08:00",  # 2018-05-21T15:59:59+00:00
-            "2018-05-22T00:00:00+08:00",
-            "2018-05-22T00:00:00+00:00",
+            "2018-05-22T00:00:00+08:00",  # 2018-05-21T16:00:00+00:00
+            "2018-05-22T00:00:00+00:00",  # 2018-05-22T00:00:00+00:00
+            "2018-05-22T23:00:00+08:00",  # 2018-05-22T15:00:00+00:00
         ]
         for date in self.test_date_list:
             datetime_obj = DateTimeModel.objects.create(time=date)
-            info("时间: {}".format(datetime_obj.time))
+            info(datetime_obj)
 
     def test_datetimefield_filter_date(self):
-        head1("## 准备测试通过`_date`来过滤时间")
-        list1("* 普通时间过滤")
+        head1("### 准备测试通过`_date`来过滤时间")
+        list1("* 普通时间直接过滤2018-05-21")
         queryset = DateTimeModel.objects.filter(time__date="2018-05-21")
         for instance in queryset:
-            out.write(style.WARNING(instance.time))
-        new_date = timezone.now() - timezone.timedelta(0, 12*3600)
+            info(instance)
+        info("返回了当前时区下时间为2018-05-21的时间")
+        # new_date = timezone.now() - timezone.timedelta(0, 12*3600)
+        new_date = timezone.datetime(2018,5,21,23,0,0,0,timezone.utc)
         info(new_date)
+        list2("* utc时间下2018-05-21 23:00:00.date过滤")
+        date = new_date.date()
+        info(date)
         queryset2 = DateTimeModel.objects.filter(time__date=new_date.date())
-        list2("* utc时间过滤")
         for instance in queryset2:
-            out.write(style.WARNING(instance.time))
+            info(instance)
+        list2("* utc时间下2018-05-21 23:00:00用时间直接过滤")
+        queryset3 = DateTimeModel.objects.filter(time__date=new_date)
+        for instance in queryset3:
+            info(instance)
+        info("直接输入时间，会先把先把时间转化成本地时区，然后再过滤")
+        list2("* 当地时区下过滤")
+
+    def test_datetimefield_order(self):
+        head1("### 准备测试时间的排序")
 
 
 class ExpressionTestCase(TestCase):
