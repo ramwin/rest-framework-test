@@ -25,3 +25,6 @@ def info(text):
 
 def success(text):
     out.write(style.SUCCESS(text))
+
+def info(text):
+    out.write(style.HTTP_INFO(text))

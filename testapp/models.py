@@ -17,6 +17,9 @@ class BasicModel(models.Model):
     def __str__(self):
         return "BasicModel: {}, id: {}".format(self.text, self.id)
 
+    class Meta:
+        ordering = ("-id", )
+
 
 class PartialModel(models.Model):
     """测试序列化类必须填写"""

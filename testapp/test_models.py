@@ -14,26 +14,9 @@ from django.core.management.color import color_style
 
 from testapp.models import *
 from testapp.serializers import *
+from testapp import head, head1, list1, list2, success, info
 
-
-out = OutputWrapper(sys.stdout)
-style = color_style()
-
-def head(text):
-    out.write(style.SQL_TABLE(text))
-
-def head1(text):
-    out.write(style.MIGRATE_HEADING(text))
-
-def list1(text):
-    out.write(style.SQL_FIELD(text))
-
-def list2(text):
-    out.write(style.SQL_COLTYPE(text))
-
-def info(text):
-    out.write(style.HTTP_INFO(text))
-
+head("# 准备测试models")
 
 
 class ModelTest(TestCase):
@@ -46,7 +29,7 @@ class ModelTest(TestCase):
         print(TestUniqueModel.objects.create(text1='er', text2='text2').text4)  # 报错，重复
 
     def test_decimal(self):
-        head("准备测试decimal这个field")
+        head1("# 准备测试decimal这个field")
         list1("* 测试基础的maxj_digits, decimal_palces超出会怎么样")
         data = {"deci": "0.333"}
         s = TestDecimalSerializer(data=data)

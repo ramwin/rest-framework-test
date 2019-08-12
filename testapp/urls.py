@@ -14,6 +14,7 @@ router = routers.SimpleRouter()
 router.register(r'testfilter', views.TestFilterViewSet)
 router.register(r'modelviewset', views.TestViewSet)
 router.register(r'log', views.TestLogViewSet)
+router.register(r'paginator', views.TestPaginatorViewSet)
 
 urlpatterns = router.urls + [
     url('^basicmodel/$', views.BasicModelView.as_view()),

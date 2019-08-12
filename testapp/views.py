@@ -248,3 +248,10 @@ class TestLogViewSet(ModelViewSet):
         innerlog.info(__name__)
         print(innerlog.handlers)
         return super(TestLogViewSet, self).list(request, *args, **kwargs)
+
+
+class TestPaginatorViewSet(ModelViewSet):
+    queryset = models.BasicModel.objects.all()
+    serializer_class = serializers.BasicModelSerializer
+    pagination_class = paginations.PaginationClass
+    template_name = "testapp/basicmodel.html"

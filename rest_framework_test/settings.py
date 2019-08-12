@@ -229,6 +229,11 @@ LOGGING = {
             "handlers": [],
             "level": "INFO",
         },
+        'testapp.paginations': {
+            'handlers': ['debug_file', 'info_file',
+                         'warning_file', 'error_file', 'console'],
+            'level': "INFO",
+        },
     },
 }
 ASGI_APPLICATION = "rest_framework_test.routing.application"
