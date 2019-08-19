@@ -241,3 +241,8 @@ class DateTimeOrder(models.Model):
 
     def __str__(self):
         return "{}".format(self.time)
+
+
+class TestModel(BasicModel):
+    class Meta:
+        proxy = True
