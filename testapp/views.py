@@ -255,3 +255,19 @@ class TestPaginatorViewSet(ModelViewSet):
     serializer_class = serializers.BasicModelSerializer
     pagination_class = paginations.PaginationClass
     template_name = "testapp/basicmodel.html"
+
+
+class MovieView(TemplateView):
+    template_name = "testapp/movie.html"
+
+    def get(self, request, *args, **kwargs):
+        print("{}访问了网页".format(request.user))
+        return render(request, self.template_name, {})
+
+
+class Mp4View(TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        print("{}访问了视频".format(request.user))
+        response = FileResponse(open('testapp/movie.mp4', 'rb'))
+        return response
