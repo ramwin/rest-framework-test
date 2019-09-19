@@ -68,15 +68,25 @@ class MySerializerTestCase(TestCase):
         out.write(style.HTTP_INFO("测试完毕"))
 
     def test_many(self):
-        head1("准备测试多对多")
-        a = serializers.ManySerializer(data={'texts': ['1', '2', '3']})
+        head1("## 准备测试多对多")
+        list1("* 有数据后批量创建")
+        BasicModel.objects.create(text='1')
+        BasicModel.objects.create(text='2')
+        a = serializers.ManySerializer(data={'texts': ['1', '3']})
         a.is_valid(raise_exception=True)
         # a.save(texts=[])
         a.save()
         success("保存成功")
+        info(a.instance.texts.all())
+        success("保存后,如果这个text对应id的basicmodel存在,就会添加")
         BasicModel.objects.create(text='text')
         a.instance.texts.add(*BasicModel.objects.all())
         # print(serializers.ManyDetailSerializer(a.instance).data)
+        list1("* 准备测试空数组的多对多")
+        b = serializers.ManySerializer(data={'texts': []})
+        b.is_valid(raise_exception=True)
+        b.save()
+        info("保存成功")
 
     def test_null(self):
         head1("## 测试Null")

@@ -78,7 +78,10 @@ class FileSerializer(serializers.ModelSerializer):
 
 
 class ManySerializer(serializers.ModelSerializer):
-    texts = serializers.ListField(child=serializers.CharField())
+    texts = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True
+        )
 
     class Meta:
         model = models.ManyModel
