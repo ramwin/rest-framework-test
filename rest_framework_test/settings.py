@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'report_builder',
     "book",
     'chat',
+    "coupons",
 ]
 
 MIDDLEWARE = [
