@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 from datetime import timedelta
 # from django.contrib.gis.db import models as gismodels
 
@@ -246,3 +247,12 @@ class DateTimeOrder(models.Model):
 class TestModel(BasicModel):
     class Meta:
         proxy = True
+
+    @classmethod
+    def post_save(cls, sender, instance, created, update_fields, **kwargs):
+        print("这个只有TestModel会调用, BasicModel在save的时候不会调用")
+        print("TestModel.posave_save")
+        print(kwargs)
+
+
+post_save.connect(TestModel.post_save, sender=TestModel)

@@ -23,6 +23,8 @@ from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns1 = [
     url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
+    url(r'coupons/', include("coupons.urls", namespace="coupons")),
+    url(r'^api-auth/', include("rest_framework.urls", namespace="api-auth")),
 ]
 urlpatterns = urlpatterns1 + [
     url(r'^admin/', admin.site.urls),
