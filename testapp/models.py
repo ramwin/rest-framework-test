@@ -255,4 +255,15 @@ class TestModel(BasicModel):
         print(kwargs)
 
 
+class TestModel2(BasicModel):
+    class Meta:
+        pass
+
+    @classmethod
+    def post_save(cls, sender, instance, created, update_fields, **kwargs):
+        print("这个只有TestModel会调用, TestModel2在save的时候不会调用")
+        print("TestModel.posave_save")
+        print(kwargs)
+
+
 post_save.connect(TestModel.post_save, sender=TestModel)
