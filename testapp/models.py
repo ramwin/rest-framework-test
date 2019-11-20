@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from datetime import timedelta
 # from django.contrib.gis.db import models as gismodels
 
@@ -20,6 +20,10 @@ class BasicModel(models.Model):
 
     class Meta:
         ordering = ("-id", )
+
+    @classmethod
+    def post_delete(cls, sender, instance, **kwargs):
+        print("BasicModel.delete")
 
 
 class PartialModel(models.Model):
@@ -267,3 +271,4 @@ class TestModel2(BasicModel):
 
 
 post_save.connect(TestModel.post_save, sender=TestModel)
+post_delete.connect(BasicModel.post_delete, sender=BasicModel)
