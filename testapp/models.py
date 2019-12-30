@@ -270,5 +270,15 @@ class TestModel2(BasicModel):
         print(kwargs)
 
 
+def after_testmodel_save(**kwargs):
+    print("after_testmodel_save")
+    print(kwargs)
+
+
+# 同时绑定一个sender, 会按照绑定顺序轮流触发
+post_save.connect(after_testmodel_save, sender=TestModel, dispatch_uid="dis1")
 post_save.connect(TestModel.post_save, sender=TestModel)
+post_save.connect(after_testmodel_save, sender=TestModel)  # 重复绑定是没有效果的
+post_save.connect(after_testmodel_save, sender=TestModel, dispatch_uid="dis")  # 重复绑定是没有效果的
+
 post_delete.connect(BasicModel.post_delete, sender=BasicModel)
