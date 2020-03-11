@@ -378,3 +378,10 @@ class TestOverWriteSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BasicModel
         fields = ["id", "text", "num", "save"]
+
+
+class TestSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    
+    class Meta:
+        fields = ["id"]

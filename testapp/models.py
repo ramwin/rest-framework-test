@@ -270,6 +270,16 @@ class TestModel2(BasicModel):
         print(kwargs)
 
 
+class Database2(models.Model):
+    text = models.CharField(max_length=31)
+
+    def __str__(self):
+        return  "Database2: {}".format(self.text)
+
+    class Params:
+        db = "database2"
+
+
 def after_testmodel_save(**kwargs):
     print("after_testmodel_save")
     print(kwargs)

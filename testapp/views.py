@@ -181,6 +181,13 @@ class TestPathView(TemplateView):
         return render(request, "testapp/测试模板.html", kwargs)
 
 
+class TestPathView2(TemplateView):
+    def get(self, request, *args, **kwargs):
+        log.info("测试url路径2")
+        log.info(kwargs)
+        return render(request, "testapp/测试模板.html", kwargs)
+
+
 class TemplateTestView(TemplateView):
     template_name = "testapp/测试模板.html"
 

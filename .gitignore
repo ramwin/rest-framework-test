@@ -5,3 +5,4 @@ DJANGO2
 static
 django_yunpian
 coupons
+db2.sqlite3
