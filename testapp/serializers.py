@@ -385,3 +385,12 @@ class TestSerializer(serializers.Serializer):
     
     class Meta:
         fields = ["id"]
+
+
+class TestDefaultSerializer(serializers.Serializer):
+    text = serializers.CharField(allow_null=True, allow_blank=True, default="test")
+    # 单单default的话，传入 " ", None, ""都会报错
+    # 否则只要传了，要么是"", 要么是 None, 要么是字符。必定存在这个key
+
+    class Meta:
+        fields = ["text"]

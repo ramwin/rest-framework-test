@@ -221,7 +221,8 @@ class MySerializerTestCase(TestCase):
         for data in data_list:
             serializer = serializers.TestValidateSerializer(data=data)
             print(serializer.is_valid())
-        out.write(style.SUCCESS("测试自己的validation完毕"))
+        # out.write(style.SUCCESS())
+        info("测试自己的validation完毕")
 
     def test_to_representation(self):
         out.write(style.HTTP_INFO("准备测试to_representation函数"))
@@ -308,7 +309,9 @@ class MySerializerTestCase(TestCase):
                 "save": 343
             })
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        # import ipdb
+        # ipdb.set_trace()
+        # serializer.save()
         info(serializer.data)
 
     def test_id(self):
@@ -345,3 +348,20 @@ class MySerializerTestCase(TestCase):
         filt1.texts.add(text3)
         info(serializers.TestLimitSerializer(filt1).data)
         info("实现不了, 直接用SerializerMethodField吧")
+
+    def test_default(self):
+        head1("## 测试如果有default会得到什么结果")
+        for i in [
+            {},
+            {"text": ""},
+            {"text": "  "},
+            {"text": None},
+            {"text": "123"},
+        ]:
+            serializer = serializers.TestDefaultSerializer(data=i)
+            info("i= {}".format(i))
+            if serializer.is_valid():
+                info("serializer.validated_data: {}".format(
+                    serializer.validated_data))
+            else:
+                info("不合法")
