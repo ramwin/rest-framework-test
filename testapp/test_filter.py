@@ -3,8 +3,6 @@
 # Xiang Wang @ 2018-06-07 17:49:05
 
 import sys
-import datetime
-import pytz
 
 from django.core.management.base import OutputWrapper
 from django.core.management.color import color_style
@@ -13,11 +11,12 @@ from django.test import Client
 from django.test import TestCase
 from testapp import models, filters
 from testapp import head, head1, list1, list2, info
-from django.utils import timezone
 
 
 out = OutputWrapper(sys.stdout)
 style = color_style()
+list1("list1")
+list2("list2")
 
 
 class FilterTestCase(TestCase):
@@ -37,7 +36,8 @@ class FilterTestCase(TestCase):
                 models.TestFilterModel2.objects.create(**data)
 
     def test_method_filter(self):
-        qs = filters.TestMethodFilter({"_bool": 'true'}, models.TestFilterModel2.objects.all()).qs
+        qs = filters.TestMethodFilter(
+            {"_bool": 'true'}, models.TestFilterModel2.objects.all()).qs
         out.write(style.HTTP_INFO(qs))
 
     def test_multichoice_filter(self):
@@ -63,8 +63,6 @@ class FilterTestCase(TestCase):
             "/testapp/testfilter/?_type=类型1&_type=类型2",
             headers={"accept": "application/json"}
             )
-        # import ipdb
-        # ipdb.set_trace()
         info(response.data)
         head1("## 过滤ManyToManyField")
         response = client.get(

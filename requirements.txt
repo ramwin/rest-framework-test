@@ -6,3 +6,5 @@ django-rest-swagger
 django-filter
 channels_redis
 django-yunpian-app
+django2-coupons
+drf-yasg

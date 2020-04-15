@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import logging
 from logging import handlers
 import ipdb
@@ -162,6 +163,11 @@ class TestFilterViewSet(ModelViewSet):
         response = super(TestFilterViewSet,
                          self).create(request, *args, **kwargs)
         return response
+
+    def filter_queryset(self, *args, **kwargs):
+        import ipdb
+        ipdb.set_trace()
+        return super().filter_queryset(*args, **kwargs)
 
 
 class URLView(TemplateView):

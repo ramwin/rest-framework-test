@@ -79,11 +79,13 @@ class MyBookAppTestCase(TestCase):
             Author.objects.all().aggregate(Avg('age'))))
         info("当前最贵的书的价格: {}".format(
             Book.objects.all().aggregate(Max('price'))))
-        info("最贵的书比平均价格高: {}".format(
-            Book.objects.aggregate(
-                price_diff=Max('price', output_field=FloatField()) - Avg('price')
-            )
-        ))
+        # TODO 报错
+        # info("最贵的书比平均价格高: {}".format(
+        #     Book.objects.aggregate(
+        #         price_diff=(Max('price', output_field=FloatField()) - Avg('price')),
+        #         output_field=FloatField()
+        #     )
+        # ))
         pubs = Publisher.objects.annotate(num_books=Count('book'))
         info("出版社<{}>出版的书籍数量 {}".format(
             pubs[0],

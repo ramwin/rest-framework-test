@@ -20,4 +20,4 @@ class ViewSetFilter(TestCase):
         response = client.get("/testapp/testint/1/")
         self.assertEqual(response.resolver_match.kwargs, {"pk": 1})
         response = client.get("/testapp/testint/-1/")
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 200)
