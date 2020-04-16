@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'chat',
     "coupons",
     "drf_yasg",
+    "import_export",
 ]
 
 MIDDLEWARE = [
@@ -274,4 +275,4 @@ CHANNEL_LAYERS = {
     },
 }
 LOGIN_URL = "/admin/login/"
-SESSION_COOKIE_AGE = 10
+SESSION_COOKIE_AGE = 3600 * 24 * 30

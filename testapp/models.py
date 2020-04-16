@@ -197,7 +197,8 @@ class TestUniqueModel(models.Model):
 
 
 class TestDecimalModel(models.Model):
-    deci = models.DecimalField(max_digits=4, decimal_places=2, default=0, blank=True)
+    deci = models.DecimalField(
+            max_digits=4, decimal_places=2, default=0, blank=True)
 
     class Meta:
         verbose_name_plural = "测试DecimalField"
@@ -274,10 +275,17 @@ class Database2(models.Model):
     text = models.CharField(max_length=31)
 
     def __str__(self):
-        return  "Database2: {}".format(self.text)
+        return "Database2: {}".format(self.text)
 
     class Params:
         db = "database2"
+
+
+class ImportModel(models.Model):
+    text = models.CharField(max_length=255, blank=False)
+
+    class Meta:
+        verbose_name_plural = verbose_name = "测试导入导出"
 
 
 def after_testmodel_save(**kwargs):
@@ -289,6 +297,8 @@ def after_testmodel_save(**kwargs):
 post_save.connect(after_testmodel_save, sender=TestModel, dispatch_uid="dis1")
 post_save.connect(TestModel.post_save, sender=TestModel)
 post_save.connect(after_testmodel_save, sender=TestModel)  # 重复绑定是没有效果的
-post_save.connect(after_testmodel_save, sender=TestModel, dispatch_uid="dis")  # 重复绑定是没有效果的
+post_save.connect(
+        after_testmodel_save, sender=TestModel,
+        dispatch_uid="dis")  # 重复绑定是没有效果的
 
 post_delete.connect(BasicModel.post_delete, sender=BasicModel)
