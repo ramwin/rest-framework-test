@@ -2,7 +2,6 @@
 
 import logging
 from logging import handlers
-import ipdb
 import json
 import tempfile
 import random
@@ -34,7 +33,7 @@ from rest_framework.response import Response
 log = logging.getLogger(__name__)
 
 
-class BasicModelView(LoginRequiredMixin, ListCreateAPIView):
+class BasicModelView(ListCreateAPIView):
     """
     get:
     返回Text列表
@@ -59,6 +58,13 @@ class BasicModelView(LoginRequiredMixin, ListCreateAPIView):
         log.info(request.data)
         log.info(type(request.data))
         # ipdb.set_trace()
+        return super(BasicModelView, self).post(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        import ipdb
+        ipdb.set_trace()
+        print(request._request.META)
+        log.info(request.user)
         return super(BasicModelView, self).post(request, *args, **kwargs)
 
 

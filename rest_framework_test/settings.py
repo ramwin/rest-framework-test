@@ -167,10 +167,15 @@ REST_FRAMEWORK = {
     #     'rest_framework.authentication.BasicAuthentication',
     #     'rest_framework.authentication.TokenAuthentication',
     # ),
-    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
-    "DATETIME_INPUT_FORMATS": [
-        "iso-8601", "%Y-%m-%d %H:%M:%S",
-    ],
+    # "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
+    # "DATETIME_INPUT_FORMATS": [
+    #     "iso-8601", "%Y-%m-%d %H:%M:%S",
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_RENDERER_CLASSES': (

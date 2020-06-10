@@ -7,3 +7,4 @@ django_yunpian
 coupons
 db2.sqlite3
 __pycache__
+rest_framework
