@@ -25,6 +25,33 @@ class MySerializerTestCase(TestCase):
     def setUp(self):
         pass
 
+    def test_local(self):
+        return
+        # 别测了. 有bug. 如果你设置user_tz=False, 你就别用timezone参数啊
+        head1("\n## 测试使用local是的timezone")
+        data = {'time': '2020-06-10T03:45:13.026Z'}  # 当作本地时间的
+        serializer = serializers.LocalModelSerializer(data=data)
+        import ipdb
+        ipdb.set_trace()
+        serializer.is_valid(raise_exception=True)
+        info(serializer.validated_data)
+        return
+
+        for data in [
+            {'time': '2020-06-10T03:45:13.026Z'},  # 正常
+            {'time': '2020-06-10 03:45:13'},  # 没有时区,就是正常的
+            {'time': '2020-06-10T03:45:13.026+08:00'},  # 只有这个会转化
+            {'time': '2020-06-10T03:45:13.026Z'}  # 当作本地时间的
+        ]:
+            info("输入: ")
+            info(data)
+            serializer = serializers.LocalModelSerializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            info(serializer.validated_data)
+            instance = serializer.save()
+            info("转化")
+            info(serializers.LocalModelSerializer(instance).data)
+
     def test_datetime(self):
         head1("\n## 测试DateTimeField")
         list1("* 准备测试datetime field")

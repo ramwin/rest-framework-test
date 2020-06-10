@@ -32,6 +32,7 @@ urlpatterns = router.urls + [
         {"scene": "admin"}, name="url"),
     path('testint/<int:pk>/', views.TestPathView.as_view(), name="testint"),
     path('template/', views.TemplateTestView.as_view(), name="template"),
+    path('templateresponse/', views.TemplateResponseView.as_view(), name="templateresponse"),
     path('movie/', views.MovieView.as_view(), name="movie"),
     path('movie.mp4', views.Mp4View.as_view(), name="mp4"),
 ]

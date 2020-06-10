@@ -293,6 +293,16 @@ def after_testmodel_save(**kwargs):
     print(kwargs)
 
 
+class Shop(models.Model):
+    name = models.CharField(max_length=10)
+
+class UserShopMoney(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    balance = models.FloatField()
+    time = models.DateTimeField(auto_now_add=True)
+
+
 # 同时绑定一个sender, 会按照绑定顺序轮流触发
 post_save.connect(after_testmodel_save, sender=TestModel, dispatch_uid="dis1")
 post_save.connect(TestModel.post_save, sender=TestModel)

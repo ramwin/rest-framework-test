@@ -142,7 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 # LANGUAGE_CODE = 'zh-hans' # 'en-us'
-LANGUAGE_CODE = 'en-us'  # 'en-us'
+LANGUAGE_CODE = 'zh-hans'  # 'en-us'
 
 TIME_ZONE = 'Asia/Shanghai'
 # TIME_ZONE = 'UTC'
@@ -151,7 +151,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -167,6 +167,10 @@ REST_FRAMEWORK = {
     #     'rest_framework.authentication.BasicAuthentication',
     #     'rest_framework.authentication.TokenAuthentication',
     # ),
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
+    "DATETIME_INPUT_FORMATS": [
+        "iso-8601", "%Y-%m-%d %H:%M:%S",
+    ],
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_RENDERER_CLASSES': (

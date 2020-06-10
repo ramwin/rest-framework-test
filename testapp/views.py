@@ -10,8 +10,11 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import FileResponse, HttpResponse, StreamingHttpResponse, Http404
+from django.template import Template, Context
+from django.template.response import TemplateResponse
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.views import View
 
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -284,3 +287,15 @@ class Mp4View(TemplateView):
         print("{}访问了视频".format(request.user))
         response = FileResponse(open('testapp/movie.mp4', 'rb'))
         return response
+
+
+class TemplateResponseView(View):
+    
+    def get(self, request):
+        # 第一种, TemplateResponse
+        # template_name = "testapp/测试模板.html"
+        # return TemplateResponse(request, "testapp/测试模板.html")
+        # 第二种, template是字符串
+        template = Template("我是模板{{request.user}}")
+        context = Context({})
+        return HttpResponse(template.render(context))
