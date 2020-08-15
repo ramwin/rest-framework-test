@@ -23,23 +23,36 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 # from rest_framework_swagger.views import get_swagger_view
+from rest_framework_swagger.views import get_swagger_view
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"), 
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns1 = [
+
+    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
     url(r'testapp/', include('testapp.urls', namespace="testapp_namespace")),
     url(r'testapp/', include('testapp.urls_v2', namespace="testapp_namespace_v2")),
     url(r'account/', include('account.urls', namespace="account_namespace")),
     url(r'coupons/', include("coupons.urls", namespace="coupons")),
     url(r'^api-auth/', include("rest_framework.urls", namespace="api-auth")),
 ]
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Snippets API",
-        default_version='v1',
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny, )
-)
 
 urlpatterns = urlpatterns1 + [
     url(r'^admin/', admin.site.urls),
